@@ -1,5 +1,6 @@
 #pragma once
 #include "sudoku9.h"
+#include "dlx.h"
 
 class Sudoku9NaiveSolver
 {
@@ -17,6 +18,26 @@ private:
 	void dfs(int pos, bool init);
 public:
 	Sudoku9NaiveSolver(Sudoku9 &__puzzle);
+
+	bool solve();
+
+	Sudoku9 solution();
+};
+
+class Sudoku9DLXSolver
+{
+private:
+	Sudoku9 puzzle;
+	DLXSolver *solver;
+
+	inline int blockId(int x, int y);
+
+	inline int rowId(int x, int y, int z);
+
+public:
+	Sudoku9DLXSolver(Sudoku9 __puzzle);
+
+	~Sudoku9DLXSolver();
 
 	bool solve();
 
