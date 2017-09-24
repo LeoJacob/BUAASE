@@ -82,31 +82,52 @@ void DLXSolver::dfs()
 	uncoverColumn(colHead);
 }
 
-DLXSolver::DLXSolver(vector<pair<int, int> > ones, int colCnt)
+inline DLXNode *DLXSolver::allocateNode()
+{
+	if (pid >= pool.size())
+		pool.push_back(new DLXNode());
+	return pool[pid++];
+}
+
+DLXSolver::DLXSolver()
+{
+	pid = 0;
+	flag = false;
+	head = NULL;
+}
+
+DLXSolver::DLXSolver(vector<pair<int, int> > &ones, int colCnt)
+{
+	set(ones, colCnt);
+}
+
+void DLXSolver::set(vector<pair<int, int> > &ones, int colCnt)
 {
 	int i, rid, x, y;
 	vector<DLXNode *> colHead;
 	DLXNode *rowHead = NULL, *p;
+	pid = 0;
 	choose.erase(choose.begin(), choose.end());
-	head = new DLXNode();
+	head = allocateNode();
 	head->L = head->R = head;
 	for (i = 0; i < colCnt; i += 1)
 	{
-		colHead.push_back(new DLXNode());
+		colHead.push_back(allocateNode());
 		colHead[i]->rid = i;
 		colHead[i]->R = head;
 		colHead[i]->L = head->L;
 		colHead[i]->L->R = colHead[i];
 		colHead[i]->R->L = colHead[i];
 		colHead[i]->U = colHead[i]->D = colHead[i];
+		colHead[i]->size = 0;
 	}
-	sort(ones.begin(), ones.end());
-	ones.erase(unique(ones.begin(), ones.end()), ones.end());
+	//sort(ones.begin(), ones.end());
+	//ones.erase(unique(ones.begin(), ones.end()), ones.end());
 	for (i = 0, rid = -1; i < ones.size(); i += 1)
 	{
 		x = ones[i].first;
 		y = ones[i].second;
-		p = new DLXNode();
+		p = allocateNode();
 		p->rid = x;
 		p->U = colHead[y]->U;
 		p->D = colHead[y];
@@ -141,18 +162,7 @@ vector<int> DLXSolver::solution()
 
 DLXSolver::~DLXSolver()
 {
-	DLXNode *col, *row, *nxt;
-	for (col = head->R; col != head;)
-	{
-		for (row = col->D; row != col;)
-		{
-			nxt = row->D;
-			delete row;
-			row = nxt;
-		}
-		nxt = col->R;
-		delete col;
-		col = nxt;
-	}
-	delete head;
+	int i;
+	for (i = 0; i < pool.size(); i += 1)
+		delete pool[i];
 }

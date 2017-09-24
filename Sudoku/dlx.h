@@ -16,9 +16,12 @@ public:
 class DLXSolver
 {
 private:
-	bool flag;
-	DLXNode *head;
+	bool flag = false;
+	DLXNode *head = NULL;
 	vector<int> choose, res;
+
+	int pid = 0;
+	vector<DLXNode *> pool;
 
 	void coverColumn(DLXNode *colHead);
 
@@ -26,10 +29,16 @@ private:
 
 	void dfs();
 
+	inline DLXNode *allocateNode();
+
 public:
-	DLXSolver(vector<pair<int, int> > ones, int colCnt);
+	DLXSolver();
+
+	DLXSolver(vector<pair<int, int> > &ones, int colCnt);
 
 	~DLXSolver();
+
+	void set(vector<pair<int, int> > &ones, int colCnt);
 
 	bool solve();
 

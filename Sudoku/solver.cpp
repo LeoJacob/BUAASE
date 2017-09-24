@@ -125,11 +125,21 @@ inline int Sudoku9DLXSolver::rowId(int x, int y, int z)
 	return x * 81 + y * 9 + z - 1;
 }
 
+Sudoku9DLXSolver::Sudoku9DLXSolver()
+{
+}
+
 Sudoku9DLXSolver::Sudoku9DLXSolver(Sudoku9 __puzzle)
+{
+	set(__puzzle);
+}
+
+void Sudoku9DLXSolver::set(Sudoku9 __puzzle)
 {
 	int i, j, k, ban, mask;
 	int row[9] = {}, col[9] = {}, block[9] = {};
-	vector<pair<int, int> > ones;
+	static vector<pair<int, int> > ones;
+	ones.erase(ones.begin(), ones.end());
 	puzzle = __puzzle;
 	for (i = 0; i < 9; i += 1)
 	{
@@ -164,12 +174,12 @@ Sudoku9DLXSolver::Sudoku9DLXSolver(Sudoku9 __puzzle)
 			}
 		}
 	}
-	solver = new DLXSolver(ones, 324);
+	solver.set(ones, 324);
 }
 
 bool Sudoku9DLXSolver::solve()
 {
-	return solver->solve();
+	return solver.solve();
 }
 
 Sudoku9 Sudoku9DLXSolver::solution()
@@ -177,7 +187,7 @@ Sudoku9 Sudoku9DLXSolver::solution()
 	int i, x, y, z;
 	vector<int> res;
 	Sudoku9 ans;
-	res = solver->solution();
+	res = solver.solution();
 	for (i = 0; i < res.size(); i += 1)
 	{
 		x = res[i] / 81;
@@ -186,9 +196,4 @@ Sudoku9 Sudoku9DLXSolver::solution()
 		ans.data[x][y] = z;
 	}
 	return ans;
-}
-
-Sudoku9DLXSolver::~Sudoku9DLXSolver()
-{
-	delete solver;
 }

@@ -28,16 +28,18 @@ class Sudoku9DLXSolver
 {
 private:
 	Sudoku9 puzzle;
-	DLXSolver *solver;
+	DLXSolver solver;
 
 	inline int blockId(int x, int y);
 
 	inline int rowId(int x, int y, int z);
 
 public:
+	Sudoku9DLXSolver();
+
 	Sudoku9DLXSolver(Sudoku9 __puzzle);
 
-	~Sudoku9DLXSolver();
+	void set(Sudoku9 __puzzle);
 
 	bool solve();
 
