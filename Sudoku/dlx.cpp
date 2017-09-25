@@ -49,7 +49,7 @@ void DLXSolver::uncoverColumn(DLXNode *colHead)
 void DLXSolver::dfs()
 {
 	int size = ~0u >> 1;
-	DLXNode *colHead = head, *row, *nxt = NULL, *col;
+	DLXNode *colHead = head, *row, *nxt, *col;
 	if (head->R == head)
 	{
 		flag = true;
@@ -57,7 +57,7 @@ void DLXSolver::dfs()
 		sort(res.begin(), res.end());
 		return;
 	}
-	for(colHead = head->R;colHead != head;colHead = colHead->R)
+	for(colHead = nxt = head->R, size = colHead->size;colHead != head;colHead = colHead->R)
 	{
 		if (colHead->size < size)
 		{
@@ -133,7 +133,7 @@ void DLXSolver::set(vector<pair<int, int> > &ones, int colCnt)
 		p->D = colHead[y];
 		p->U->D = p;
 		p->D->U = p;
-		if (rid != x)
+		if (!i || rid != x)
 		{
 			rid = x;
 			rowHead = p;
