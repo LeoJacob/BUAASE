@@ -3,6 +3,15 @@
 
 using namespace std;
 
+struct Sudoku9Node
+{
+	long long x[5];
+
+	bool operator<(Sudoku9Node &v) const;
+
+	bool operator==(Sudoku9Node &v) const;
+};
+
 class Sudoku9
 {
 private:
@@ -17,4 +26,6 @@ public:
 	bool isValid();
 
 	string toString();
+
+	Sudoku9Node node();
 };
