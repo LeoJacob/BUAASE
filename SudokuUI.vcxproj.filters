@@ -56,12 +56,21 @@
     <CustomBuild Include="SudokuUI.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="getGenerateRequest.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ui_SudokuUI.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_SudokuUI.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="ui_SudokuUI.h">
+    <ClInclude Include="GeneratedFiles\ui_getGenerateRequest.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_getGenerateRequest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3584,5 +3584,25 @@
  <resources>
   <include location="SudokuUI.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>lineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SudokuUIClass</receiver>
+   <slot>testValuechange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>100</x>
+     <y>79</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>testValuechange()</slot>
+ </slots>
 </ui>

@@ -14,6 +14,9 @@
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
+#include <Qpalette>
+#include <assert.h>
+#include "SudokuUI.h"
 #define NUMBER_OF_ROWS 9
 #define NUMBER_OF_COLUMNS NUMBER_OF_ROWS
 #define TOP_MARGIN 50
@@ -24,21 +27,21 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_SudokuUIClass
+class Ui_SudokuUIClass:public QWidget
 {
 public:
     QWidget *centralWidget;
 	QLineEdit *sudokuBox[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
-    
     QFrame *vline[4];
     QFrame *hline[4];
    
-    QPushButton *getTip;
+    QPushButton *getTips;
     QPushButton *finish;
     QPushButton *_quit;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
+
 
     void setupUi(QMainWindow *SudokuUIClass)
     {
@@ -49,6 +52,8 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
 
 		int i, j;
+		
+
 		for (i = 0; i < NUMBER_OF_ROWS; i++)
 		{
 			for (j = 0; j < NUMBER_OF_COLUMNS; j++)
@@ -69,6 +74,9 @@ public:
 				font.setWeight(75);
 				sudokuBox[i][j]->setFont(font);
 				sudokuBox[i][j]->setAlignment(Qt::AlignCenter);
+				sudokuBox[i][j]->setMaxLength(1);
+				sudokuBox[i][j]->setValidator(new QIntValidator(1, 9, sudokuBox[i][j]));
+				
 			}
 		}
 
@@ -83,8 +91,8 @@ public:
 			vline[i]->setFrameShadow(QFrame::Sunken);
 		}
 
-        getTip = new QPushButton(centralWidget);
-		getTip->setGeometry(QRect(
+        getTips = new QPushButton(centralWidget);
+		getTips->setGeometry(QRect(
 			sudokuBox[0][NUMBER_OF_COLUMNS-1]->geometry().right()+BOX_SIDE_LENGTH,
 			TOP_MARGIN,
 			75, 
@@ -116,6 +124,8 @@ public:
         SudokuUIClass->setStatusBar(statusBar);
 
         retranslateUi(SudokuUIClass);
+		
+		
 
         QMetaObject::connectSlotsByName(SudokuUIClass);
     } // setupUi
@@ -127,15 +137,17 @@ public:
 		for (i = 0; i < NUMBER_OF_ROWS; i++)
 		{
 			for (j = 0; j < NUMBER_OF_COLUMNS; j++)
-				sudokuBox[i][j]->setText(QApplication::translate("SudokuUIClass", "1", Q_NULLPTR));
+				sudokuBox[i][j]->setText(QApplication::translate("SudokuUIClass", "", Q_NULLPTR));
 		}
        
-        getTip->setText(QApplication::translate("SudokuUIClass", "\346\217\220\347\244\272", Q_NULLPTR));
+        getTips->setText(QApplication::translate("SudokuUIClass", "\346\217\220\347\244\272", Q_NULLPTR));
         finish->setText(QApplication::translate("SudokuUIClass", "\345\256\214\346\210\220", Q_NULLPTR));
         _quit->setText(QApplication::translate("SudokuUIClass", "\351\200\200\345\207\272", Q_NULLPTR));
     } // retranslateUi
 
 };
+
+
 
 namespace Ui {
     class SudokuUIClass: public Ui_SudokuUIClass {};

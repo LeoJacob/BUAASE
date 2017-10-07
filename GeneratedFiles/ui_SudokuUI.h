@@ -931,6 +931,7 @@ public:
         SudokuUIClass->setStatusBar(statusBar);
 
         retranslateUi(SudokuUIClass);
+        QObject::connect(lineEdit, SIGNAL(textChanged(QString)), SudokuUIClass, SLOT(testValuechange()));
 
         QMetaObject::connectSlotsByName(SudokuUIClass);
     } // setupUi

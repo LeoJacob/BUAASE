@@ -1,4 +1,5 @@
-﻿  moc_SudokuUI.cpp
+﻿  Moc'ing SudokuUI.h...
+  moc_SudokuUI.cpp
   SudokuUI.cpp
   main.cpp
   正在生成代码...
