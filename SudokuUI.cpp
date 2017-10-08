@@ -15,6 +15,10 @@ SudokuUI::SudokuUI(QWidget *parent)
 	assert(flag);
 	flag = QObject::connect(ui.getTips, SIGNAL(clicked()), this, SLOT(responseGetTips()));
 	assert(flag);
+	flag = QObject::connect(generateDialog, SIGNAL(destroyed()), qApp, SLOT(quit()));
+	assert(flag);
+	flag = QObject::connect(ui.finish, SIGNAL(clicked()), this, SLOT(responseFinish()));
+	assert(flag);
 
 	for (i = 0; i < NUMBER_OF_ROWS; i++)
 	{
@@ -185,6 +189,20 @@ void SudokuUI::testValuechange()
 	}
 }
 
+bool SudokuUI::testAnswer()
+{
+	int i, j;
+	for (i = 0; i < NUMBER_OF_ROWS; i++)
+	{
+		for (j = 0; j < NUMBER_OF_COLUMNS; j++)
+		{
+			if (!testOneBoxValid(i, j) || ui.sudokuBox[i][j]->text().isEmpty() || ui.sudokuBox[i][j]->text().toInt() == 0)
+				return false;
+		}
+	}
+	return true;
+}
+
 void SudokuUI::refreshGetTips()
 {
 	bool en;
@@ -218,5 +236,14 @@ void SudokuUI::receiveQues(int **ques, int iGenerateNumber)
 
 void SudokuUI::responseFinish()
 {
-
+	if (testAnswer())
+	{
+		//正确结果提示
+		QMessageBox::information(NULL, "info", "Content", QMessageBox::Yes, QMessageBox::Yes);
+	}
+	else {
+		//错误结果提示
+		QMessageBox::warning(NULL, "warning", "Content", QMessageBox::Yes, QMessageBox::Yes);
+	}
+	
 }

@@ -2,6 +2,8 @@
 
 #include <QDialog>  
 #include "ui_getGenerateRequest.h"
+#include <QCloseEvent>
+#include <QMessageBox>
 
 class GenetateNumber : public QDialog
 {
@@ -18,7 +20,7 @@ public:
 	GenetateNumber(QDialog *parent = 0);
 	~GenetateNumber();
 	bool testGenerateNumber();	//检查输入的数独数目是否合法
-
+	void closeEvent(QCloseEvent * event);
 signals:
 	void generateSuccessfully(int **result, int iGenerateNumber);
 public slots :

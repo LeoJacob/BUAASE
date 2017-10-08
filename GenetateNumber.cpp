@@ -87,3 +87,9 @@ void GenetateNumber::refreshOKStatus()
 {
 		ui.okButton->setEnabled(testGenerateNumber());
 }
+
+//获取生成参数的页面不允许按‘x’键强行关闭。
+void GenetateNumber::closeEvent(QCloseEvent * event)
+{
+	event->ignore();
+}

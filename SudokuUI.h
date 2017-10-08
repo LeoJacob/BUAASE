@@ -3,6 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_SudokuUI.h"
 #include "GenetateNumber.h"
+#include "ui_finishMessage.h"
 
 class SudokuUI : public QMainWindow
 {
@@ -12,6 +13,7 @@ public:
 	
 	Ui::SudokuUIClass ui;
 	GenetateNumber *generateDialog = new GenetateNumber;
+	Ui::Form finishMessage;
 	int **ques;
 	int iGenerateNumber;
 	int curQuesNumber = 0;
@@ -24,6 +26,7 @@ public:
 	bool testOneBoxValid(int rowId, int colId);
 	void testValuechange();
 	void refreshGetTips();
+	bool testAnswer();
 
 public slots:
 	void receiveQues(int **ques, int iGenerateNumber);

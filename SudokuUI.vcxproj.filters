@@ -71,6 +71,9 @@
     <CustomBuild Include="GenetateNumber.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="finishMessage.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_SudokuUI.h">
@@ -80,6 +83,12 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="ui_getGenerateRequest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_finishMessage.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_finishMessage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
