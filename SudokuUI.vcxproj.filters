@@ -45,14 +45,11 @@
     <ClCompile Include="GeneratedFiles\qrc_SudokuUI.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="getGenetateNumber.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_GenetateNumber.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GenetateNumber.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_getGenetateNumber.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_getGenetateNumber.cpp">
-      <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -71,7 +68,7 @@
     <CustomBuild Include="ui_SudokuUI.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="getGenetateNumber.h">
+    <CustomBuild Include="GenetateNumber.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

@@ -69,7 +69,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GeneratedFiles\Debug\moc_getGenetateNumber.cpp">
+    <ClCompile Include="GeneratedFiles\Debug\moc_GenetateNumber.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_SudokuUI.cpp">
@@ -81,13 +81,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_getGenetateNumber.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_SudokuUI.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="getGenetateNumber.cpp" />
+    <ClCompile Include="GenetateNumber.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SudokuUI.cpp" />
   </ItemGroup>
@@ -118,7 +115,7 @@
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_getGenerateRequest.h" />
     <ClInclude Include="GeneratedFiles\ui_SudokuUI.h" />
-    <CustomBuild Include="getGenetateNumber.h">
+    <CustomBuild Include="GenetateNumber.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing getGenetateNumber.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>

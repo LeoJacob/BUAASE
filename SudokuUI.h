@@ -2,12 +2,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_SudokuUI.h"
-
-struct ques
-{
-	int content[NUMBER_OF_ROWS*NUMBER_OF_COLUMNS] = {};
-	struct ques *next=nullptr;
-};
+#include "GenetateNumber.h"
 
 class SudokuUI : public QMainWindow
 {
@@ -16,16 +11,23 @@ class SudokuUI : public QMainWindow
 public:
 	
 	Ui::SudokuUIClass ui;
-	struct ques *curQues=nullptr;
-
+	GenetateNumber *generateDialog = new GenetateNumber;
+	int **ques;
+	int iGenerateNumber;
+	int curQuesNumber = 0;
 	SudokuUI(QWidget *parent = Q_NULLPTR);
-	void readSudokuBox(int (&data)[NUMBER_OF_ROWS*NUMBER_OF_COLUMNS]);
-
-	void updateSudokuBox(int (&value)[81], int rowId = -1, int colId = -1);
+	void readSudokuBox(int(&data)[81]);
+	void updateSudokuBox(int value[81], int rowId = -1, int colId = -1);
+	
 	bool searchTipsPos(int &rowId, int &colId);
-	void responseGetTips();
+	
 	bool testOneBoxValid(int rowId, int colId);
+	void testValuechange();
+	void refreshGetTips();
 
 public slots:
-	void testValuechange();
+	void receiveQues(int **ques, int iGenerateNumber);
+	void refreshAll();
+	void responseGetTips();
+	void responseFinish();
 };

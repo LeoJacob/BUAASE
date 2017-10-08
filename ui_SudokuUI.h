@@ -16,7 +16,6 @@
 #include <QtWidgets/QWidget>
 #include <Qpalette>
 #include <assert.h>
-#include "SudokuUI.h"
 #define NUMBER_OF_ROWS 9
 #define NUMBER_OF_COLUMNS NUMBER_OF_ROWS
 #define TOP_MARGIN 50
@@ -24,6 +23,10 @@
 #define BOX_SIDE_LENGTH 40
 #define LINE_LENGTH NUMBER_OF_ROWS*BOX_SIDE_LENGTH
 #define LINE_WIDTH 5
+#define MAX_GENERATE_NUMBER 10000
+
+
+
 
 QT_BEGIN_NAMESPACE
 

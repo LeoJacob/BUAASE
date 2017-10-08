@@ -1,20 +1,14 @@
 #include "SudokuUI.h"
-#include "getGenetateNumber.h"
+#include "GenetateNumber.h"
 #include <QtWidgets/QApplication>
+#include <stdio.h>
 
-int iGenerateNumber = 0;
-int iMode = 1;
-int iMinSpace = 20;
-int iMaxSpace = 20;
-bool bUnique = false;
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	getGenetateNumber getNumber(iGenerateNumber, iMode, iMinSpace, iMaxSpace, bUnique);
-	a.setActiveWindow(&getNumber);
-	getNumber.show();
 	SudokuUI w;
-	//w.show();
+	w.show();
+	a.setActiveWindow(&w);
 	return a.exec();
 }

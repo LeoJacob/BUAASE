@@ -164,7 +164,7 @@ public:
 
         retranslateUi(Dialog);
         
-        QObject::connect(cancelButton, SIGNAL(clicked()), Dialog, SLOT(reject()));
+        QObject::connect(cancelButton, SIGNAL(clicked()), qApp, SLOT(quit()));
         QObject::connect(hSliderMinSpace, SIGNAL(valueChanged(int)), LCDMinSpace, SLOT(display(int)));
         QObject::connect(hSliderMaxSpace, SIGNAL(valueChanged(int)), LCDMaxSpace, SLOT(display(int)));
 
