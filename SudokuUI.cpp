@@ -5,8 +5,9 @@ SudokuUI::SudokuUI(QWidget *parent)
 {
 	int i, j;
 	ui.setupUi(this);
-	this->ques = ques;
-	this->iGenerateNumber = iGenerateNumber;
+	minTime.setHMS(23, 59, 59);
+	ui.LCDMinTimeCost->display(minTime.toString("hh:mm:ss"));
+	timer->setInterval(1000);
 	bool flag = false;
 	flag = QObject::connect(generateDialog, SIGNAL(generateSuccessfully(int **, int)), this, SLOT(receiveQues(int **, int)));
 	assert(flag);
@@ -18,6 +19,8 @@ SudokuUI::SudokuUI(QWidget *parent)
 	flag = QObject::connect(generateDialog, SIGNAL(destroyed()), qApp, SLOT(quit()));
 	assert(flag);
 	flag = QObject::connect(ui.finish, SIGNAL(clicked()), this, SLOT(responseFinish()));
+	assert(flag);
+	flag = QObject::connect(timer, SIGNAL(timeout()), this, SLOT(refreshLCDCurTime()));
 	assert(flag);
 
 	for (i = 0; i < NUMBER_OF_ROWS; i++)
@@ -125,10 +128,6 @@ void SudokuUI::responseGetTips()
 		updateSudokuBox(solution, 2, 3);
 		//updateSudokuBox(solution, rowId, colId);
 	}
-	else
-	{
-		//处理玩家已填满空格，却按提示的情况。
-	}
 }
 
 bool SudokuUI::testOneBoxValid(int rowId, int colId)
@@ -232,18 +231,116 @@ void SudokuUI::receiveQues(int **ques, int iGenerateNumber)
 	this->ques = ques;
 	this->iGenerateNumber = iGenerateNumber;
 	updateSudokuBox(this->ques[curQuesNumber]);
+	startTime = QTime::currentTime();
+	timer->start();
 }
 
 void SudokuUI::responseFinish()
 {
 	if (testAnswer())
 	{
-		//正确结果提示
-		QMessageBox::information(NULL, "info", "Content", QMessageBox::Yes, QMessageBox::Yes);
+		refreshLCDMinTime();
+		timer->stop();
+		QMessageBox::information(NULL, "info", "\346\201\255\345\226\234\346\202\250\347\255\224\345\257\271\344\272\206\357\274\201", QMessageBox::Yes, QMessageBox::Yes);
+		if (curQuesNumber + 1 < iGenerateNumber)
+		{
+			curQuesNumber++;
+			updateSudokuBox(ques[curQuesNumber]);
+			startTime = QTime::currentTime();
+			timer->start();
+		}
+		//提示玩家已解决所有数独题目，按“退出”键退出游戏，按“再玩一组”键重新生成数独题目并继续游戏
+		QMessageBox::information(NULL, "info", "\346\201\255\345\226\234\357\274\201\346\202\250\345\267\262\345\201\232\345\257\271\346\211\200\346\234\211\346\225\260\347\213\254\351\242\230\347\233\256\357\274\201\346\214\211\342\200\234\351\200\200\345\207\272\342\200\235\345\210\231\351\200\200\345\207\272\346\270\270\346\210\217\357\274\214\346\214\211\342\200\234\345\206\215\347\216\251\344\270\200\347\273\204\342\200\235\345\210\231\351\207\215\346\226\260\347\224\237\346\210\220\346\225\260\347\213\254\351\242\230\347\233\256", QMessageBox::Yes, QMessageBox::Yes);
 	}
 	else {
-		//错误结果提示
-		QMessageBox::warning(NULL, "warning", "Content", QMessageBox::Yes, QMessageBox::Yes);
+		QMessageBox::warning(NULL, "warning", "\347\234\237\351\201\227\346\206\276\357\274\201\347\273\247\347\273\255\345\212\252\345\212\233\357\274\201\n\351\200\201\344\275\240\344\270\244\346\235\241\351\224\246\345\233\212\345\246\231\350\256\241\357\274\232\n1.\345\241\253\346\273\241\346\211\200\346\234\211\347\251\272\346\240\274\n2.\346\266\210\351\231\244\347\272\242\350\211\262\346\225\260\345\255\227", QMessageBox::Yes, QMessageBox::Yes);
+	}	
+}
+
+void SudokuUI::refreshLCDCurTime()
+{
+	int hh, mm, ss;
+	absTime = QTime::currentTime();
+	hh = absTime.hour() - startTime.hour();
+	mm = absTime.minute() - startTime.minute();
+	ss = absTime.second() - startTime.second();
+	if (ss < 0) 
+	{
+		ss += 60;
+		mm--;
 	}
-	
+	if (mm < 0)
+	{
+		mm += 60;
+		hh--;
+	}
+	if (hh < 0)
+		hh += 24;
+	relativeTime.setHMS(hh, mm, ss);
+	ui.LCDCurTimeCost->display(relativeTime.toString("hh:mm:ss"));
+}
+
+void SudokuUI::refreshLCDMinTime()
+{
+	if (relativeTime < minTime)
+	{
+		minTime = relativeTime;
+		ui.LCDMinTimeCost->display(relativeTime.toString("hh:mm:ss"));
+	}
+}
+
+void SudokuUI::keyPressEvent(QKeyEvent * event)
+{
+	cursorQWidget = QWidget::focusWidget();
+	int rowId = (cursorQWidget->geometry().top() - TOP_MARGIN) / BOX_SIDE_LENGTH;
+	int colId = (cursorQWidget->geometry().left() - LEFT_MARGIN) / BOX_SIDE_LENGTH;
+	int i;
+	if (event->key() == Qt::Key_Up)
+	{
+		for (i = rowId - 1; i >= 0; i--)
+		{
+			if (ui.sudokuBox[i][colId]->isEnabled())
+			{
+				rowId = i;
+				break;
+			}
+		}
+		ui.sudokuBox[rowId][colId]->setFocus();
+	}
+	else if (event->key() == Qt::Key_Down)
+	{
+		for (i = rowId + 1; i < NUMBER_OF_ROWS; i++)
+		{
+			if (ui.sudokuBox[i][colId]->isEnabled())
+			{
+				rowId = i;
+				break;
+			}
+		}
+		ui.sudokuBox[rowId][colId]->setFocus();
+	}
+	else if (event->key() == Qt::Key_Control)
+	{
+		for (i = colId - 1; i >= 0; i--)
+		{
+			if (ui.sudokuBox[rowId][i]->isEnabled())
+			{
+				colId = i;
+				break;
+			}
+		}
+		ui.sudokuBox[rowId][colId]->setFocus();
+	}
+	else if (event->key() == Qt::Key_Alt)
+	{
+		for (i = colId + 1; i < NUMBER_OF_COLUMNS; i++)
+		{
+			if (ui.sudokuBox[rowId][i]->isEnabled())
+			{
+				colId = i;
+				break;
+			}
+		}
+		ui.sudokuBox[rowId][colId]->setFocus();
+	}
 }

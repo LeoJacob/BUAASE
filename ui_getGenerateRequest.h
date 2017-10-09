@@ -136,11 +136,17 @@ public:
         maxSpace->setGeometry(QRect(10, 160, 71, 20));
 		maxSpace->setStyleSheet("background:transparent;border-width:0;border-style:outset");
 		maxSpace->setReadOnly(true);
+		QFont font2;
+		font2.setFamily(QStringLiteral("Arial"));
+		font2.setPointSize(14);
+		font2.setBold(true);
+		font2.setWeight(75);
         LCDMinSpace = new QLCDNumber(Dialog);
         LCDMinSpace->setObjectName(QStringLiteral("LCDMinSpace"));
         LCDMinSpace->setGeometry(QRect(120, 120, 64, 23));
 		LCDMinSpace->setDigitCount(2);
 		LCDMinSpace->display(20);
+		LCDMinSpace->setFont(font2);
         hSliderMinSpace = new QSlider(Dialog);
         hSliderMinSpace->setObjectName(QStringLiteral("hSliderMinSpace"));
         hSliderMinSpace->setGeometry(QRect(210, 120, 160, 22));
@@ -152,6 +158,7 @@ public:
         LCDMaxSpace->setGeometry(QRect(120, 160, 64, 23));
 		LCDMaxSpace->setDigitCount(2);
 		LCDMaxSpace->display(20);
+		LCDMaxSpace->setFont(font2);
         hSliderMaxSpace = new QSlider(Dialog);
         hSliderMaxSpace->setObjectName(QStringLiteral("hSliderMaxSpace"));
         hSliderMaxSpace->setGeometry(QRect(210, 160, 160, 22));
@@ -173,7 +180,7 @@ public:
 
     void retranslateUi(QDialog *Dialog)
     {
-        Dialog->setWindowTitle(QApplication::translate("Dialog", "Dialog", Q_NULLPTR));
+        Dialog->setWindowTitle(QApplication::translate("Dialog", "Welcome", Q_NULLPTR));
         okButton->setText(QApplication::translate("Dialog", "OK", Q_NULLPTR));
         cancelButton->setText(QApplication::translate("Dialog", "Cancel", Q_NULLPTR));
         lineEditGenerationNumber->setText(QApplication::translate("Dialog", "\350\257\267\350\276\223\345\205\245\346\202\250\351\234\200\350\246\201\347\232\204\346\225\260\347\213\254\346\225\260\347\233\256", Q_NULLPTR));

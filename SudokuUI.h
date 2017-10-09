@@ -4,6 +4,8 @@
 #include "ui_SudokuUI.h"
 #include "GenetateNumber.h"
 #include "ui_finishMessage.h"
+#include <QTime>
+#include <QTimer>
 
 class SudokuUI : public QMainWindow
 {
@@ -13,7 +15,9 @@ public:
 	
 	Ui::SudokuUIClass ui;
 	GenetateNumber *generateDialog = new GenetateNumber;
-	Ui::Form finishMessage;
+	QTimer *timer=new QTimer;
+	QTime startTime, absTime, relativeTime, minTime;
+	QWidget *cursorQWidget;
 	int **ques;
 	int iGenerateNumber;
 	int curQuesNumber = 0;
@@ -27,10 +31,13 @@ public:
 	void testValuechange();
 	void refreshGetTips();
 	bool testAnswer();
+	void refreshLCDMinTime();
+	void keyPressEvent(QKeyEvent * event);
 
 public slots:
 	void receiveQues(int **ques, int iGenerateNumber);
 	void refreshAll();
 	void responseGetTips();
 	void responseFinish();
+	void refreshLCDCurTime();
 };

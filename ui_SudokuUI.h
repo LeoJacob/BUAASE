@@ -7,6 +7,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -24,7 +25,7 @@
 #define LINE_LENGTH NUMBER_OF_ROWS*BOX_SIDE_LENGTH
 #define LINE_WIDTH 5
 #define MAX_GENERATE_NUMBER 10000
-
+#define ZERO 0
 
 
 
@@ -37,7 +38,10 @@ public:
 	QLineEdit *sudokuBox[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
     QFrame *vline[4];
     QFrame *hline[4];
-   
+	QLCDNumber *LCDCurTimeCost;
+	QLineEdit *curTimecost;
+	QLineEdit *minTimeCost;
+	QLCDNumber *LCDMinTimeCost;
     QPushButton *getTips;
     QPushButton *finish;
     QPushButton *_quit;
@@ -95,24 +99,47 @@ public:
 		}
 
         getTips = new QPushButton(centralWidget);
-		getTips->setGeometry(QRect(
-			sudokuBox[0][NUMBER_OF_COLUMNS-1]->geometry().right()+BOX_SIDE_LENGTH,
-			TOP_MARGIN,
-			75, 
-			23));
-
+		getTips->setGeometry(QRect(450, 310, 75, 23));
         finish = new QPushButton(centralWidget);
-		finish->setGeometry(QRect(
-			sudokuBox[NUMBER_OF_ROWS - 2][NUMBER_OF_COLUMNS - 1]->geometry().right() + BOX_SIDE_LENGTH,
-			sudokuBox[NUMBER_OF_ROWS - 2][NUMBER_OF_COLUMNS - 1]->geometry().top() + BOX_SIDE_LENGTH / 2,
-			75,
-			23));
+		finish->setGeometry(QRect(450, 350, 75, 23));
         _quit = new QPushButton(centralWidget);
-        _quit->setGeometry(QRect(
-			sudokuBox[NUMBER_OF_COLUMNS - 1][NUMBER_OF_COLUMNS - 1]->geometry().right() + BOX_SIDE_LENGTH,
-			sudokuBox[NUMBER_OF_COLUMNS - 1][NUMBER_OF_COLUMNS - 1]->geometry().top() + BOX_SIDE_LENGTH / 2,
-			75, 
-			23));
+        _quit->setGeometry(QRect(450, 390, 75, 23));
+
+		LCDCurTimeCost = new QLCDNumber(centralWidget);
+		LCDCurTimeCost->setObjectName(QStringLiteral("LCDCurTimeCost"));
+		LCDCurTimeCost->setGeometry(QRect(450, 90, 111, 23));
+		QFont font1;
+		font1.setFamily(QStringLiteral("Arial"));
+		font1.setPointSize(14);
+		font1.setBold(true);
+		font1.setItalic(false);
+		font1.setWeight(75);
+		LCDCurTimeCost->setFont(font1);
+		LCDCurTimeCost->setDigitCount(8);
+		LCDCurTimeCost->setSegmentStyle(QLCDNumber::Flat);
+		curTimecost = new QLineEdit(centralWidget);
+		curTimecost->setObjectName(QStringLiteral("curTimecost"));
+		curTimecost->setGeometry(QRect(450, 50, 113, 20));
+		curTimecost->setReadOnly(true);
+		curTimecost->setStyleSheet("background:transparent;border-width:0;border-style:outset");
+		curTimecost->setDisabled(true);
+		minTimeCost = new QLineEdit(centralWidget);
+		minTimeCost->setObjectName(QStringLiteral("minTimeCost"));
+		minTimeCost->setGeometry(QRect(450, 150, 113, 20));
+		minTimeCost->setReadOnly(true);
+		minTimeCost->setStyleSheet("background:transparent;border-width:0;border-style:outset");
+		minTimeCost->setDisabled(true);
+		LCDMinTimeCost = new QLCDNumber(centralWidget);
+		LCDMinTimeCost->setObjectName(QStringLiteral("LCDMinTimeCost"));
+		LCDMinTimeCost->setGeometry(QRect(450, 190, 111, 23));
+		LCDMinTimeCost->setSegmentStyle(QLCDNumber::Flat);
+		QFont font2;
+		font2.setFamily(QStringLiteral("Arial"));
+		font2.setPointSize(14);
+		font2.setBold(true);
+		font2.setWeight(75);
+		LCDMinTimeCost->setFont(font2);
+		LCDMinTimeCost->setDigitCount(8);
 
         SudokuUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(SudokuUIClass);
@@ -127,8 +154,6 @@ public:
         SudokuUIClass->setStatusBar(statusBar);
 
         retranslateUi(SudokuUIClass);
-		
-		
 
         QMetaObject::connectSlotsByName(SudokuUIClass);
     } // setupUi
@@ -146,6 +171,8 @@ public:
         getTips->setText(QApplication::translate("SudokuUIClass", "\346\217\220\347\244\272", Q_NULLPTR));
         finish->setText(QApplication::translate("SudokuUIClass", "\345\256\214\346\210\220", Q_NULLPTR));
         _quit->setText(QApplication::translate("SudokuUIClass", "\351\200\200\345\207\272", Q_NULLPTR));
+		curTimecost->setText(QApplication::translate("SudokuUIClass", "\345\275\223\345\211\215\350\200\227\346\227\266\357\274\232", Q_NULLPTR));
+		minTimeCost->setText(QApplication::translate("SudokuUIClass", "\346\234\200\344\275\263\347\272\252\345\275\225\357\274\232", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -121,6 +122,14 @@ public:
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QPushButton *pushButton_3;
+    QLCDNumber *LCDCurTimeCost;
+    QLineEdit *curTimecost;
+    QLineEdit *minTimeCost;
+    QLCDNumber *LCDMinTimeCost;
+    QPushButton *preGame;
+    QPushButton *nextGame;
+    QPushButton *pushButton_6;
+    QPushButton *pushButton_4;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -911,13 +920,54 @@ public:
         lineEdit_81->setAlignment(Qt::AlignCenter);
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(450, 50, 75, 23));
+        pushButton->setGeometry(QRect(450, 310, 75, 23));
         pushButton_2 = new QPushButton(centralWidget);
         pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
         pushButton_2->setGeometry(QRect(450, 350, 75, 23));
         pushButton_3 = new QPushButton(centralWidget);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
         pushButton_3->setGeometry(QRect(450, 390, 75, 23));
+        LCDCurTimeCost = new QLCDNumber(centralWidget);
+        LCDCurTimeCost->setObjectName(QStringLiteral("LCDCurTimeCost"));
+        LCDCurTimeCost->setGeometry(QRect(450, 80, 91, 23));
+        QFont font1;
+        font1.setFamily(QStringLiteral("Arial"));
+        font1.setPointSize(16);
+        font1.setBold(true);
+        font1.setItalic(false);
+        font1.setWeight(75);
+        LCDCurTimeCost->setFont(font1);
+        LCDCurTimeCost->setDigitCount(10);
+        curTimecost = new QLineEdit(centralWidget);
+        curTimecost->setObjectName(QStringLiteral("curTimecost"));
+        curTimecost->setGeometry(QRect(450, 50, 91, 20));
+        curTimecost->setReadOnly(true);
+        minTimeCost = new QLineEdit(centralWidget);
+        minTimeCost->setObjectName(QStringLiteral("minTimeCost"));
+        minTimeCost->setGeometry(QRect(450, 120, 91, 20));
+        minTimeCost->setReadOnly(true);
+        LCDMinTimeCost = new QLCDNumber(centralWidget);
+        LCDMinTimeCost->setObjectName(QStringLiteral("LCDMinTimeCost"));
+        LCDMinTimeCost->setGeometry(QRect(450, 150, 91, 23));
+        QFont font2;
+        font2.setFamily(QStringLiteral("Arial"));
+        font2.setPointSize(16);
+        font2.setBold(true);
+        font2.setWeight(75);
+        LCDMinTimeCost->setFont(font2);
+        LCDMinTimeCost->setDigitCount(10);
+        preGame = new QPushButton(centralWidget);
+        preGame->setObjectName(QStringLiteral("preGame"));
+        preGame->setGeometry(QRect(450, 190, 75, 23));
+        nextGame = new QPushButton(centralWidget);
+        nextGame->setObjectName(QStringLiteral("nextGame"));
+        nextGame->setGeometry(QRect(450, 230, 75, 23));
+        pushButton_6 = new QPushButton(centralWidget);
+        pushButton_6->setObjectName(QStringLiteral("pushButton_6"));
+        pushButton_6->setGeometry(QRect(550, 230, 75, 23));
+        pushButton_4 = new QPushButton(centralWidget);
+        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+        pushButton_4->setGeometry(QRect(550, 190, 75, 23));
         SudokuUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(SudokuUIClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -1023,6 +1073,12 @@ public:
         pushButton->setText(QApplication::translate("SudokuUIClass", "\346\217\220\347\244\272", Q_NULLPTR));
         pushButton_2->setText(QApplication::translate("SudokuUIClass", "\345\256\214\346\210\220", Q_NULLPTR));
         pushButton_3->setText(QApplication::translate("SudokuUIClass", "\351\200\200\345\207\272", Q_NULLPTR));
+        curTimecost->setText(QApplication::translate("SudokuUIClass", "\345\275\223\345\211\215\350\200\227\346\227\266\357\274\232", Q_NULLPTR));
+        minTimeCost->setText(QApplication::translate("SudokuUIClass", "\346\234\200\344\275\263\347\272\252\345\275\225\357\274\232", Q_NULLPTR));
+        preGame->setText(QApplication::translate("SudokuUIClass", "\344\270\212\344\270\200\345\205\263", Q_NULLPTR));
+        nextGame->setText(QApplication::translate("SudokuUIClass", "\344\270\213\344\270\200\345\205\263", Q_NULLPTR));
+        pushButton_6->setText(QApplication::translate("SudokuUIClass", "\345\206\215\347\216\251\344\270\200\347\273\204", Q_NULLPTR));
+        pushButton_4->setText(QApplication::translate("SudokuUIClass", "\346\211\213\345\212\250\351\200\211\345\205\263", Q_NULLPTR));
     } // retranslateUi
 
 };
