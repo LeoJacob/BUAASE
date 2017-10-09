@@ -22,17 +22,31 @@ SudokuUI::SudokuUI(QWidget *parent)
 	assert(flag);
 	flag = QObject::connect(timer, SIGNAL(timeout()), this, SLOT(refreshLCDCurTime()));
 	assert(flag);
+	flag = QObject::connect(ui.curGameNumberContent, SIGNAL(textChanged(QString)), this, SLOT(refreshPreAndNextButton()));
+	assert(flag);
+	flag = QObject::connect(ui.preGame, SIGNAL(clicked()), this, SLOT(responsePreGame()));
+	assert(flag);
+	flag = QObject::connect(ui.nextGame, SIGNAL(clicked()), this, SLOT(responseNextGame()));
+	assert(flag);
+	flag = QObject::connect(ui.chooseGameContent, SIGNAL(textChanged(QString)), this, SLOT(refreshJump()));
+	assert(flag);
+	flag = QObject::connect(ui.jump, SIGNAL(clicked()), this, SLOT(responseJump()));
+	assert(flag);
+	flag = QObject::connect(ui.playAgain, SIGNAL(clicked()), this, SLOT(responsePlayAgain()));
+	assert(flag);
 
 	for (i = 0; i < NUMBER_OF_ROWS; i++)
 	{
 		for (j = 0; j < NUMBER_OF_COLUMNS; j++)
 		{
 			bool flag = false;
-			flag = QObject::connect(ui.sudokuBox[i][j], SIGNAL(textChanged(QString)), this, SLOT(refreshAll()));
+			flag = QObject::connect(ui.sudokuBox[i][j], SIGNAL(textChanged(QString)), this, SLOT(refreshAboutSudokuBox()));
 			assert(flag);
 		}
 	}
-	refreshAll();
+	refreshAboutSudokuBox();
+	refreshJump();
+	refreshPreAndNextButton();
 }
 
 void SudokuUI::readSudokuBox(int(&data)[81])
@@ -220,7 +234,7 @@ void SudokuUI::refreshGetTips()
 	ui.getTips->setEnabled(en);
 }
 
-void SudokuUI::refreshAll()
+void SudokuUI::refreshAboutSudokuBox()
 {
 	testValuechange();
 	refreshGetTips();
@@ -231,8 +245,13 @@ void SudokuUI::receiveQues(int **ques, int iGenerateNumber)
 	this->ques = ques;
 	this->iGenerateNumber = iGenerateNumber;
 	updateSudokuBox(this->ques[curQuesNumber]);
+	ui.curGameNumberContent->setText(QString::number(curQuesNumber + 1));
+	ui.totalGameNumberContent->setText(QString::number(iGenerateNumber));
 	startTime = QTime::currentTime();
 	timer->start();
+	refreshAboutSudokuBox();
+	refreshJump();
+	refreshPreAndNextButton();
 }
 
 void SudokuUI::responseFinish()
@@ -248,6 +267,7 @@ void SudokuUI::responseFinish()
 			updateSudokuBox(ques[curQuesNumber]);
 			startTime = QTime::currentTime();
 			timer->start();
+			ui.curGameNumberContent->setText(QString::number(curQuesNumber + 1));
 		}
 		//提示玩家已解决所有数独题目，按“退出”键退出游戏，按“再玩一组”键重新生成数独题目并继续游戏
 		QMessageBox::information(NULL, "info", "\346\201\255\345\226\234\357\274\201\346\202\250\345\267\262\345\201\232\345\257\271\346\211\200\346\234\211\346\225\260\347\213\254\351\242\230\347\233\256\357\274\201\346\214\211\342\200\234\351\200\200\345\207\272\342\200\235\345\210\231\351\200\200\345\207\272\346\270\270\346\210\217\357\274\214\346\214\211\342\200\234\345\206\215\347\216\251\344\270\200\347\273\204\342\200\235\345\210\231\351\207\215\346\226\260\347\224\237\346\210\220\346\225\260\347\213\254\351\242\230\347\233\256", QMessageBox::Yes, QMessageBox::Yes);
@@ -343,4 +363,59 @@ void SudokuUI::keyPressEvent(QKeyEvent * event)
 		}
 		ui.sudokuBox[rowId][colId]->setFocus();
 	}
+}
+
+void SudokuUI::refreshPreAndNextButton()
+{
+	ui.preGame->setEnabled(ui.curGameNumberContent->text().toInt() > 1);
+	ui.nextGame->setEnabled(ui.curGameNumberContent->text().toInt() < iGenerateNumber);
+}
+
+void SudokuUI::responsePreGame()
+{
+	if (curQuesNumber > 0)
+	{
+		timer->stop();
+		curQuesNumber--;
+		updateSudokuBox(ques[curQuesNumber]);
+		ui.curGameNumberContent->setText(QString::number(curQuesNumber + 1));
+		startTime = QTime::currentTime();
+		timer->start();
+	}
+}
+
+void SudokuUI::responseNextGame()
+{
+	if (curQuesNumber + 1 < iGenerateNumber)
+	{
+		timer->stop();
+		curQuesNumber++;
+		updateSudokuBox(ques[curQuesNumber]);
+		ui.curGameNumberContent->setText(QString::number(curQuesNumber + 1));
+		startTime = QTime::currentTime();
+		timer->start();
+	}
+}
+
+void SudokuUI::refreshJump()
+{
+	if (ui.chooseGameContent->text().isEmpty() || ui.chooseGameContent->text().toInt() < 1 || ui.chooseGameContent->text().toInt() > iGenerateNumber)
+		ui.jump->setEnabled(false);
+	else
+		ui.jump->setEnabled(true);
+}
+
+void SudokuUI::responseJump()
+{
+	timer->stop();
+	curQuesNumber = ui.chooseGameContent->text().toInt() - 1;
+	updateSudokuBox(ques[curQuesNumber]);
+	ui.curGameNumberContent->setText(QString::number(curQuesNumber + 1));
+	startTime = QTime::currentTime();
+	timer->start();
+}
+
+void SudokuUI::responsePlayAgain()
+{
+	generateDialog->open();
 }

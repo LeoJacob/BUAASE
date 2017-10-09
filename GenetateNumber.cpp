@@ -63,8 +63,22 @@ ACCEPT:
 				 3, 1, 2, 6, 4, 5, 9, 0, 8,
 				 6, 4, 5, 9, 7, 0, 3, 1, 2,
 				 0, 7, 8, 3, 0, 2, 6, 4, 0};
-	for (i = 0; i < 81; i++)
+	int temp_2[81] = { 1, 2, 3, 4, 5, 6, 7, 8, 9,
+		4, 5, 6, 7, 8, 9, 1, 2, 3,
+		7, 8, 9, 0, 2, 3, 4, 5, 6,
+		2, 3, 1, 0, 6, 0, 8, 9, 7,
+		0, 6, 4, 8, 9, 7, 2, 3, 0,
+		8, 9, 7, 0, 3, 0, 5, 6, 4,
+		3, 1, 2, 6, 4, 5, 9, 0, 8,
+		6, 4, 5, 9, 7, 0, 3, 1, 2,
+		0, 7, 8, 3, 0, 2, 6, 4, 0 };
+	for (i = 0; i < 81; i++) 
+	{
 		result[0][i] = temp[i];
+		if (iGenerateNumber == 2)
+			result[1][i] = temp_2[i];
+	}
+	
 	emit generateSuccessfully(result, iGenerateNumber);
 	setWindowModality(Qt::NonModal);
 	this->accept();

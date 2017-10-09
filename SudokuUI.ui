@@ -3520,12 +3520,12 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="getTips">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>310</y>
-      <width>75</width>
+      <x>444</x>
+      <y>350</y>
+      <width>81</width>
       <height>23</height>
      </rect>
     </property>
@@ -3533,12 +3533,12 @@
      <string>提示</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="finish">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>350</y>
-      <width>75</width>
+      <x>444</x>
+      <y>390</y>
+      <width>81</width>
       <height>23</height>
      </rect>
     </property>
@@ -3546,12 +3546,12 @@
      <string>完成</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="quit">
     <property name="geometry">
      <rect>
-      <x>450</x>
+      <x>550</x>
       <y>390</y>
-      <width>75</width>
+      <width>81</width>
       <height>23</height>
      </rect>
     </property>
@@ -3582,6 +3582,9 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="curTimecost">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -3598,6 +3601,9 @@
     </property>
    </widget>
    <widget class="QLineEdit" name="minTimeCost">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>450</x>
@@ -3637,9 +3643,9 @@
    <widget class="QPushButton" name="preGame">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>190</y>
-      <width>75</width>
+      <x>444</x>
+      <y>310</y>
+      <width>81</width>
       <height>23</height>
      </rect>
     </property>
@@ -3650,9 +3656,9 @@
    <widget class="QPushButton" name="nextGame">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>230</y>
-      <width>75</width>
+      <x>550</x>
+      <y>310</y>
+      <width>81</width>
       <height>23</height>
      </rect>
     </property>
@@ -3660,12 +3666,12 @@
      <string>下一关</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="playAgain">
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>230</y>
-      <width>75</width>
+      <y>350</y>
+      <width>81</width>
       <height>23</height>
      </rect>
     </property>
@@ -3673,17 +3679,104 @@
      <string>再玩一组</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QLineEdit" name="currentGame">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>190</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>当前关卡：</string>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="curGameNumberContent">
     <property name="geometry">
      <rect>
       <x>550</x>
       <y>190</y>
-      <width>75</width>
+      <width>41</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="totalGameNumber">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>230</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>关卡总数：</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="totalGameNumberContent">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>230</y>
+      <width>41</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="chooseGameContent">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>270</y>
+      <width>41</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>10000</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="jump">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>270</y>
+      <width>41</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>手动选关</string>
+     <string>跳转</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="chooseGame">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>270</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>选择关卡：</string>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

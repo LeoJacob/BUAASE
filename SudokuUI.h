@@ -36,8 +36,14 @@ public:
 
 public slots:
 	void receiveQues(int **ques, int iGenerateNumber);
-	void refreshAll();
+	void refreshAboutSudokuBox();
 	void responseGetTips();
 	void responseFinish();
 	void refreshLCDCurTime();
+	void refreshPreAndNextButton();
+	void responsePreGame();
+	void responseNextGame();
+	void refreshJump();
+	void responseJump();
+	void responsePlayAgain();
 };
