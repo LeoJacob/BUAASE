@@ -6,7 +6,11 @@ SudokuUI::SudokuUI(QWidget *parent)
 	int i, j;
 	ui.setupUi(this);
 	minTime.setHMS(23, 59, 59);
+	relativeTime.setHMS(0, 0, 0);
+	generateDialog = new GenetateNumber;
+	timer = new QTimer;
 	ui.LCDMinTimeCost->display(minTime.toString("hh:mm:ss"));
+	ui.LCDCurTimeCost->display(relativeTime.toString("hh:mm:ss"));
 	timer->setInterval(1000);
 	bool flag = false;
 	flag = QObject::connect(generateDialog, SIGNAL(generateSuccessfully(int **, int)), this, SLOT(receiveQues(int **, int)));
@@ -362,6 +366,40 @@ void SudokuUI::keyPressEvent(QKeyEvent * event)
 			}
 		}
 		ui.sudokuBox[rowId][colId]->setFocus();
+	}
+	else if (event->key() == Qt::Key_F1)
+	{
+		if (ui.preGame->isEnabled())
+			responsePreGame();
+	}
+	else if (event->key() == Qt::Key_F2)
+	{
+		if (ui.nextGame->isEnabled())
+			responseNextGame();
+	}
+	else if (event->key() == Qt::Key_F3)
+	{
+		ui.chooseGameContent->setFocus();
+	}
+	else if (event->key() == Qt::Key_F4)
+	{
+		if (ui.jump->isEnabled())
+			responseJump();
+	}
+	else if (event->key() == Qt::Key_F5)
+	{
+		if (ui.getTips->isEnabled())
+			responseGetTips();
+	}
+	else if (event->key() == Qt::Key_F6)
+	{
+		if (ui.finish->isEnabled())
+			responseFinish();
+	}
+	else if (event->key() == Qt::Key_F7)
+	{
+		if (ui.playAgain->isEnabled())
+			responsePlayAgain();
 	}
 }
 

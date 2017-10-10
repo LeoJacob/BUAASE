@@ -14,8 +14,8 @@ class SudokuUI : public QMainWindow
 public:
 	
 	Ui::SudokuUIClass ui;
-	GenetateNumber *generateDialog = new GenetateNumber;
-	QTimer *timer=new QTimer;
+	GenetateNumber *generateDialog; 
+	QTimer *timer; 
 	QTime startTime, absTime, relativeTime, minTime;
 	QWidget *cursorQWidget;
 	int **ques;
