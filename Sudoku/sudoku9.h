@@ -1,15 +1,13 @@
 #pragma once
 #include <string>
 
-using namespace std;
-
 struct Sudoku9Node
 {
 	long long x[5];
 
-	bool operator<(Sudoku9Node &v) const;
+	bool operator<(const Sudoku9Node v) const;
 
-	bool operator==(Sudoku9Node &v) const;
+	bool operator==(const Sudoku9Node v) const;
 };
 
 class Sudoku9
@@ -21,11 +19,19 @@ public:
 
 	Sudoku9();
 
-	Sudoku9(string __data);
+	Sudoku9(std::string __data);
 
 	bool isValid();
 
-	string toString();
+    bool isValidPuzzle();
+
+	std::string toString();
+
+    std::string toNormString();
+
+    Sudoku9 normForm();
 
 	Sudoku9Node node();
+
+    Sudoku9Node normNode();
 };
