@@ -4,6 +4,8 @@
 #define MEDIUM_MODE 2
 #define HARD_MODE 3
 
+
+
 SudokuUI::SudokuUI(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -25,8 +27,6 @@ SudokuUI::SudokuUI(QWidget *parent)
 	assert(flag);
 	generateDialog->show();
 	flag = QObject::connect(ui._quit, SIGNAL(clicked()), qApp, SLOT(quit()));
-	assert(flag);
-	flag = QObject::connect(ui.getTips, SIGNAL(clicked()), this, SLOT(responseGetTips()));
 	assert(flag);
 	flag = QObject::connect(generateDialog, SIGNAL(destroyed()), qApp, SLOT(quit()));
 	assert(flag);
@@ -57,9 +57,9 @@ SudokuUI::SudokuUI(QWidget *parent)
 	{
 		for (j = 0; j < NUMBER_OF_COLUMNS; j++)
 		{
-			bool flag = false;
 			flag = QObject::connect(ui.sudokuBox[i][j], SIGNAL(textChanged(QString)), this, SLOT(refreshAboutSudokuBox()));
 			assert(flag);
+			flag = QObject::connect(ui.sudokuBox[i][j], SIGNAL(getTips(int, int)), this, SLOT(responseGetTips(int, int)));
 		}
 	}
 	refreshContinueButton();
@@ -138,27 +138,27 @@ bool SudokuUI::searchTipsPos(int &rowId, int &colId)
 			若无解，提示玩家无解
 		2.若找不到空，提示玩家不需要提示
 */
-void SudokuUI::responseGetTips()
+void SudokuUI::responseGetTips(int rowId, int colId)
 {
-	int rowId, colId;
-	if (searchTipsPos(rowId, colId)) 
+	if (ui.pauseButton->isEnabled())
 	{
 		int puzzle[NUMBER_OF_ROWS*NUMBER_OF_COLUMNS] = {};
 		int solution[NUMBER_OF_ROWS*NUMBER_OF_COLUMNS] = {};
 		readSudokuBox(puzzle);
+		puzzle[rowId*NUMBER_OF_COLUMNS + colId] = 0;
 		//solve(&puzzle, solution);			//调用求解数独接口，求得当前状态数独的解
 		int temp[81] = { 1, 2, 3, 4, 5, 6, 7, 8, 9,
-							4, 5, 6, 7, 8, 9, 1, 2, 3,
-							7, 8, 9, 1, 2, 3, 4, 5, 6,
-							2, 3, 1, 5, 6, 4, 8, 9, 7,
-							5, 6, 4, 8, 9, 0, 2, 3, 1,
-							8, 9, 7, 2, 3, 1, 5, 6, 4,
-							3, 1, 2, 6, 4, 5, 9, 0, 8,
-							6, 4, 5, 9, 7, 0, 3, 1, 2,
-							0, 7, 8, 0, 1, 2, 6, 4, 5 };
+			4, 5, 6, 7, 8, 9, 1, 2, 3,
+			7, 8, 9, 1, 2, 3, 4, 5, 6,
+			2, 3, 1, 5, 6, 4, 8, 9, 7,
+			5, 6, 4, 8, 9, 0, 2, 3, 1,
+			8, 9, 7, 2, 3, 1, 5, 6, 4,
+			3, 1, 2, 6, 4, 5, 9, 0, 8,
+			6, 4, 5, 9, 7, 0, 3, 1, 2,
+			0, 7, 8, 0, 1, 2, 6, 4, 5 };
 		for (int i = 0; i < 81; i++)
 			solution[i] = temp[i];
-		updateSudokuBox(solution, 2, 3);
+		updateSudokuBox(solution, rowId, colId);
 		//updateSudokuBox(solution, rowId, colId);
 	}
 }
@@ -235,28 +235,9 @@ bool SudokuUI::testAnswer()
 	return true;
 }
 
-void SudokuUI::refreshGetTips()
-{
-	bool en;
-	int i, j;
-	for (i = 0; i < NUMBER_OF_ROWS; i++)
-	{
-		for (j = 0; j < NUMBER_OF_COLUMNS; j++)
-		{
-			if (ui.sudokuBox[i][j]->text().isEmpty())
-			{
-				en = true;
-				break;
-			}
-		}
-	}
-	ui.getTips->setEnabled(en);
-}
-
 void SudokuUI::refreshAboutSudokuBox()
 {
 	testValuechange();
-	refreshGetTips();
 }
 
 void SudokuUI::receiveQues(int **ques, int iGenerateNumber, int iMode)
@@ -294,7 +275,6 @@ void SudokuUI::receiveQues(int **ques, int iGenerateNumber, int iMode)
 	timer->start();
 	ui.continueButton->setDisabled(true);
 	ui.pauseButton->setEnabled(true);
-	ui.getTips->setEnabled(true);
 	ui.finish->setEnabled(true);
 	refreshAboutSudokuBox();
 	refreshJump();
@@ -436,11 +416,6 @@ void SudokuUI::keyPressEvent(QKeyEvent * event)
 		if (ui.jump->isEnabled())
 			responseJump();
 	}
-	else if (event->key() == Qt::Key_F5)
-	{
-		if (ui.getTips->isEnabled())
-			responseGetTips();
-	}
 	else if (event->key() == Qt::Key_F6)
 	{
 		if (ui.finish->isEnabled())
@@ -471,7 +446,6 @@ void SudokuUI::responsePreGame()
 		timer->start();
 		ui.continueButton->setDisabled(true);
 		ui.pauseButton->setEnabled(true);
-		ui.getTips->setEnabled(true);
 		ui.finish->setEnabled(true);
 	}
 }
@@ -488,7 +462,6 @@ void SudokuUI::responseNextGame()
 		timer->start();
 		ui.continueButton->setDisabled(true);
 		ui.pauseButton->setEnabled(true);
-		ui.getTips->setEnabled(true);
 		ui.finish->setEnabled(true);
 	}
 }
@@ -511,7 +484,6 @@ void SudokuUI::responseJump()
 	timer->start();
 	ui.continueButton->setDisabled(true);
 	ui.pauseButton->setEnabled(true);
-	ui.getTips->setEnabled(true);
 	ui.finish->setEnabled(true);
 }
 
@@ -525,7 +497,6 @@ void SudokuUI::responsePause()
 	timer->stop();
 	ui.pauseButton->setDisabled(true);
 	ui.continueButton->setEnabled(true);
-	ui.getTips->setDisabled(true);
 	ui.finish->setDisabled(true);
 }
 
@@ -534,7 +505,6 @@ void SudokuUI::responseContinue()
 	timer->start();
 	ui.continueButton->setDisabled(true);
 	ui.pauseButton->setEnabled(true);
-	ui.getTips->setEnabled(true);
 	ui.finish->setEnabled(true);
 }
 

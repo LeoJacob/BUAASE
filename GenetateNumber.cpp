@@ -39,6 +39,7 @@ GenetateNumber::~GenetateNumber()
 
 void GenetateNumber::responseOK()
 {
+	
 	int i, j;
 	iGenerateNumber = ui.generationNumber->text().toInt();
 	if (ui.easy->isChecked()) 

@@ -30,16 +30,17 @@ public:
 	
 	bool testOneBoxValid(int rowId, int colId);
 	void testValuechange();
-	void refreshGetTips();
 	bool testAnswer();
 	void refreshLCDMinTime();
-	void keyPressEvent(QKeyEvent * event);
 	void refreshContinueButton();
+
+protected:
+	void keyPressEvent(QKeyEvent * event);
 
 public slots:
 	void receiveQues(int **ques, int iGenerateNumber, int iMode);
 	void refreshAboutSudokuBox();
-	void responseGetTips();
+	void responseGetTips(int rowId, int colId);
 	void responseFinish();
 	void refreshLCDCurTime();
 	void refreshPreAndNextButton();

@@ -51,6 +51,15 @@
     <ClCompile Include="GenetateNumber.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="myQLineEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_myQLineEdit.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_myQLineEdit.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="SudokuUI.h">
@@ -73,6 +82,9 @@
     </CustomBuild>
     <CustomBuild Include="finishMessage.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="myQLineEdit.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

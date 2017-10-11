@@ -17,6 +17,7 @@
 #include <QtWidgets/QWidget>
 #include <Qpalette>
 #include <assert.h>
+#include "myQLineEdit.h"
 #define NUMBER_OF_ROWS 9
 #define NUMBER_OF_COLUMNS NUMBER_OF_ROWS
 #define TOP_MARGIN 50
@@ -38,14 +39,13 @@ class Ui_SudokuUIClass:public QWidget
 {
 public:
     QWidget *centralWidget;
-	QLineEdit *sudokuBox[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
+	myQLineEdit *sudokuBox[NUMBER_OF_ROWS][NUMBER_OF_COLUMNS];
     QFrame *vline[4];
     QFrame *hline[4];
 	QLCDNumber *LCDCurTimeCost;
 	QLineEdit *curTimecost;
 	QLineEdit *minTimeCost;
 	QLCDNumber *LCDMinTimeCost;
-    QPushButton *getTips;
     QPushButton *finish;
     QPushButton *_quit;
 	QPushButton *preGame;
@@ -84,7 +84,7 @@ public:
 		{
 			for (j = 0; j < NUMBER_OF_COLUMNS; j++)
 			{
-				sudokuBox[i][j] = new QLineEdit(centralWidget);
+				sudokuBox[i][j] = new myQLineEdit(centralWidget);
 				sudokuBox[i][j]->setGeometry(QRect(LEFT_MARGIN+BOX_SIDE_LENGTH*j, TOP_MARGIN + BOX_SIDE_LENGTH*i, BOX_SIDE_LENGTH, BOX_SIDE_LENGTH));
 				QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 				sizePolicy.setHorizontalStretch(0);
@@ -102,7 +102,6 @@ public:
 				sudokuBox[i][j]->setAlignment(Qt::AlignCenter);
 				sudokuBox[i][j]->setMaxLength(1);
 				sudokuBox[i][j]->setValidator(new QIntValidator(1, 9, sudokuBox[i][j]));
-				
 			}
 		}
 
@@ -117,12 +116,11 @@ public:
 			vline[i]->setFrameShadow(QFrame::Sunken);
 		}
 
-        getTips = new QPushButton(centralWidget);
-		getTips->setGeometry(QRect(450, 350, 71, 23));
+        
         finish = new QPushButton(centralWidget);
-		finish->setGeometry(QRect(450, 390, 71, 23));
+		finish->setGeometry(QRect(450, 350, 71, 23));
         _quit = new QPushButton(centralWidget);
-		_quit->setGeometry(QRect(550, 390, 71, 23));
+		_quit->setGeometry(QRect(450, 390, 71, 23));
 
 		LCDCurTimeCost = new QLCDNumber(centralWidget);
 		LCDCurTimeCost->setObjectName(QStringLiteral("LCDCurTimeCost"));
@@ -256,8 +254,6 @@ public:
 			for (j = 0; j < NUMBER_OF_COLUMNS; j++)
 				sudokuBox[i][j]->setText(QApplication::translate("SudokuUIClass", "", Q_NULLPTR));
 		}
-       
-        getTips->setText(QApplication::translate("SudokuUIClass", "\346\217\220\347\244\272", Q_NULLPTR));
         finish->setText(QApplication::translate("SudokuUIClass", "\345\256\214\346\210\220", Q_NULLPTR));
         _quit->setText(QApplication::translate("SudokuUIClass", "\351\200\200\345\207\272", Q_NULLPTR));
 		curTimecost->setText(QApplication::translate("SudokuUIClass", "\345\275\223\345\211\215\350\200\227\346\227\266\357\274\232", Q_NULLPTR));
