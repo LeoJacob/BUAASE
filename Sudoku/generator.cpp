@@ -1,10 +1,13 @@
 #include "stdafx.h"
-#include <vector>
+#include <cassert>
 #include <algorithm>
+#include <set>
 #include "sudoku9.h"
+#include "solver.h"
 #include "generator.h"
 
-using namespace std;
+#define DEBUG 0
+//#define GENERATE 0
 
 void NaiveSudoku9Generator::cantorExpand(int id, int perm[], int n)
 {
@@ -334,6 +337,159 @@ Sudoku9(
 	"978542631"
 )
 };
+
+void Sudoku9Generator::__generate(int number, int lowerBlank, int upperBlank, int lowerSize, int upperSize, int result[][81])
+{
+    assert(0 <= lowerBlank && lowerBlank <= 64);
+    assert(upperBlank < 0 || (lowerBlank <= upperBlank && upperBlank <= 64));
+    assert(lowerSize < 0 || 81 <= lowerSize);
+    assert(upperSize < 0 || 81 <= lowerSize);
+    assert(upperSize < 0 || lowerSize < 0 || lowerSize <= upperSize);
+
+    int i, j, r, tar, init, done;
+    int cell[81];
+    Sudoku9 blank(
+        "123456789"
+        "000000000"
+        "000000000"
+        "000000000"
+        "000000000"
+        "000000000"
+        "000000000"
+        "000000000"
+        "000000000"
+    ), base;
+    Sudoku9DLXSolver solver(blank), checkSolver;
+    for (i = 0; i < 81; i += 1)
+        cell[i] = i;
+    for (i = 0; i < number; i += 1)
+    {
+        if (upperBlank < 0)
+            tar = -1;
+        else
+            tar = lowerBlank + rand() % (upperBlank - lowerBlank + 1);
+        solver.solve();
+        base = solver.solution();
+        std::random_shuffle(cell, cell + 81);
+        for (j = done = 0; j < 81 && (tar < 0 || done < tar); j += 1)
+        {
+            init = base.data[cell[j] / 9][cell[j] % 9];
+            base.data[cell[j] / 9][cell[j] % 9] = 0;
+            checkSolver.set(base);
+            if ((r = checkSolver.onlyOne()) > 0)
+                done += 1;
+            else
+                base.data[cell[j] / 9][cell[j] % 9] = init;
+        }
+        if ((tar >= 0 && done < tar)
+            || (done < lowerBlank))
+        {
+            i -= 1;
+            continue;
+        }
+        if (lowerSize >= 0 || upperSize >= 0)
+        {
+            checkSolver.set(base);
+            r = checkSolver.onlyOne();
+            if (lowerSize >= 0 && r < lowerSize)
+            {
+                i -= 1;
+                continue;
+            }
+            if (upperSize >= 0 && r > upperSize)
+            {
+                i -= 1;
+                continue;
+            }
+        }
+#ifdef DEBUG
+        if(!(i % (number / 100)))
+            printf("i: %d\n", i);
+#endif //DEBUG
+        for (j = 0; j < 81; j += 1)
+            result[i][j] = base.data[j / 9][j % 9];
+    }
+}
+
+void loadNSudoku9FromFile(int number, const char *filename, int result[][81])
+{
+    FILE *fin;
+    int i, j, N;
+    int permutation[11] = {};
+    fin = fopen(filename, "r");
+    fscanf(fin, "%d", &N);
+    char str[100];
+    std::vector<std::string> repository;
+    for (i = 0; i < N; i += 1)
+    {
+        fscanf(fin, "%s", str);
+        repository.push_back(str);
+    }
+    fclose(fin);
+    std::random_shuffle(repository.begin(), repository.end());
+    for (i = 0; i < 10; i += 1)
+        permutation[i] = i;
+    for (i = 0; i < number; i += 1)
+    {
+        std::random_shuffle(permutation + 1, permutation + 10);
+        for (j = 0; j < 81; j += 1)
+            result[i][j] = permutation[repository[i][j] - '0'];
+    }
+}
+
+void Sudoku9Generator::generateMode1(int number, int result[][81])
+{
+#ifdef GENERATE
+    const int lowerBlank = 25, upperBlank = 40;
+    const int lowerSize = 81, upperSize = 81;
+    __generate(number, lowerBlank, upperBlank, lowerSize, upperSize, result);
+#else
+    loadNSudoku9FromFile(number, "mode1.txt", result);
+#endif //GENERATE
+}
+
+void Sudoku9Generator::generateMode2(int number, int result[][81])
+{
+#ifdef GENERATE
+    const int lowerBlank = 35, upperBlank = 50;
+    const int lowerSize = 82, upperSize = 100;
+    __generate(number, lowerBlank, upperBlank, lowerSize, upperSize, result);
+#else
+    loadNSudoku9FromFile(number, "mode2.txt", result);
+#endif //GENERATE
+}
+
+void Sudoku9Generator::generateMode3(int number, int result[][81])
+{
+#ifdef GENERATE
+    const int lowerBlank = 45, upperBlank = -1;
+    const int lowerSize = 121, upperSize = -1;
+    __generate(number, lowerBlank, upperBlank, lowerSize, upperSize, result);
+#else
+    loadNSudoku9FromFile(number, "mode3.txt", result);
+#endif //GENERATE
+}
+
+void Sudoku9Generator::generate(int number, int mode, int result[][81])
+{
+    switch (mode)
+    {
+    case 1:
+        generateMode1(number, result);
+        break;
+    case 2:
+        generateMode2(number, result);
+        break;
+    case 3:
+        generateMode3(number, result);
+        break;
+    }
+}
+
+void Sudoku9Generator::generate(int number, int lower, int upper, bool unique, int result[][81])
+{
+    __generate(number, lower, upper, -1, -1, result);
+}
 
 /*
 int main(int argc, char *argv[])
