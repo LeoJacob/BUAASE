@@ -346,7 +346,7 @@ namespace UnitTest
             int i, j, k, blank, N, r;
             char str[100];
             FILE *fin;
-            fin = _wfopen(L"d:\\Material\\Computer Science\\2017-2018 秋季 软件工程\\作业\\Sudoku\\sudoku\\mode1.txt", L"r");
+            fin = fopen("mode1.txt", "r");
             fscanf(fin, "%d", &N);
             Assert::IsTrue(N == 10000, L"N is less than 10000.");
             for (i = 0; i < N; i += 1)
@@ -386,7 +386,7 @@ namespace UnitTest
             int i, j, k, blank, N, r;
             char str[100];
             FILE *fin;
-            fin = _wfopen(L"d:\\Material\\Computer Science\\2017-2018 秋季 软件工程\\作业\\Sudoku\\sudoku\\mode2.txt", L"r");
+            fin = fopen("mode2.txt", "r");
             fscanf(fin, "%d", &N);
             Assert::IsTrue(N == 10000, L"N is less than 10000.");
             for (i = 0; i < N; i += 1)
@@ -426,7 +426,7 @@ namespace UnitTest
             int i, j, k, blank, N, r;
             char str[100];
             FILE *fin;
-            fin = _wfopen(L"d:\\Material\\Computer Science\\2017-2018 秋季 软件工程\\作业\\Sudoku\\sudoku\\mode3.txt", L"r");
+            fin = fopen("mode3.txt", "r");
             fscanf(fin, "%d", &N);
             Assert::IsTrue(N == 10000, L"N is less than 10000.");
             for (i = 0; i < N; i += 1)
@@ -577,6 +577,183 @@ namespace UnitTest
             table.erase(std::unique(table.begin(), table.end()), table.end());
             Assert::IsTrue(table.size() == N, L"The number is inconsistent.");
             delete[] result;
+		}
+
+		TEST_METHOD(CheckEqualBlank20Generate)
+		{
+            Sudoku9 puzzle, ans;
+            Sudoku9DLXSolver checkSolver;
+            Core core;
+            std::vector<Sudoku9Node> table;
+            int i, j, k, blank, N = 10000, r;
+            int(*result)[81] = new int[10000][81];
+            core.generate(N, 20, 20, true, result);
+            char info[1000];
+            for (i = 0; i < N; i += 1)
+            {
+                for (j = 0; j < 9; j += 1)
+                {
+                    for (k = 0; k < 9; k += 1)
+                        puzzle.data[j][k] = result[i][j * 9 + k];
+                }
+                Assert::IsTrue(puzzle.isValidPuzzle());
+                for (j = blank = 0; j < 9; j += 1)
+                {
+                    for (k = 0; k < 9; k += 1)
+                    {
+                        if (!puzzle.data[j][k])
+                            blank += 1;
+                    }
+                }
+                Assert::IsTrue(blank == 20, L"The number of blank is inconsistent.");
+                checkSolver.set(puzzle);
+                Assert::IsTrue(checkSolver.solve(), L"The puzzle has no solution.");
+                Assert::IsFalse(checkSolver.solve(), L"The puzzle has multiple solution.");
+                ans = checkSolver.solution();
+                Assert::IsTrue(ans.isValid());
+                table.push_back(ans.normNode());
+            }
+            std::sort(table.begin(), table.end());
+            table.erase(std::unique(table.begin(), table.end()), table.end());
+            Assert::IsTrue(table.size() == N, L"The number is inconsistent.");
+            delete[] result;
+		}
+
+		TEST_METHOD(CheckEqualBlank55Generate)
+		{
+            Sudoku9 puzzle, ans;
+            Sudoku9DLXSolver checkSolver;
+            Core core;
+            std::vector<Sudoku9Node> table;
+            int i, j, k, blank, N = 10000, r;
+            int(*result)[81] = new int[10000][81];
+            core.generate(N, 55, 55, true, result);
+            char info[1000];
+            for (i = 0; i < N; i += 1)
+            {
+                for (j = 0; j < 9; j += 1)
+                {
+                    for (k = 0; k < 9; k += 1)
+                        puzzle.data[j][k] = result[i][j * 9 + k];
+                }
+                Assert::IsTrue(puzzle.isValidPuzzle());
+                for (j = blank = 0; j < 9; j += 1)
+                {
+                    for (k = 0; k < 9; k += 1)
+                    {
+                        if (!puzzle.data[j][k])
+                            blank += 1;
+                    }
+                }
+                Assert::IsTrue(blank == 55, L"The number of blank is inconsistent.");
+                checkSolver.set(puzzle);
+                Assert::IsTrue(checkSolver.solve(), L"The puzzle has no solution.");
+                Assert::IsFalse(checkSolver.solve(), L"The puzzle has multiple solution.");
+                ans = checkSolver.solution();
+                Assert::IsTrue(ans.isValid());
+                table.push_back(ans.normNode());
+            }
+            std::sort(table.begin(), table.end());
+            table.erase(std::unique(table.begin(), table.end()), table.end());
+            Assert::IsTrue(table.size() == N, L"The number is inconsistent.");
+            delete[] result;
+		}
+
+		TEST_METHOD(CheckCoreSolve1)
+		{
+            int i, j;
+            int origin[81], result[81];
+            Core core;
+			Sudoku9 puzzle(
+				"800000000"
+				"003600000"
+				"070090200"
+				"050007000"
+				"000045700"
+				"000100030"
+				"001000068"
+				"008500010"
+				"090000400"), ans;
+            for (i = 0; i < 9; i += 1)
+            {
+                for (j = 0; j < 9; j += 1)
+                    origin[i * 9 + j] = puzzle.data[i][j];
+            }
+			Assert::IsTrue(core.solve(origin, result));
+            for (i = 0; i < 9; i += 1)
+            {
+                for (j = 0; j < 9; j += 1)
+                    ans.data[i][j] = result[i * 9 + j];
+            }
+			Assert::IsTrue(ans.isValid());
+			for (i = 0; i < 9; i += 1)
+			{
+				for (j = 0; j < 9; j += 1)
+				{
+					if (puzzle.data[i][j] > 0)
+						Assert::IsTrue(puzzle.data[i][j] == ans.data[i][j]);
+				}
+			}
+		}
+
+		TEST_METHOD(CheckCoreSolve2)
+		{
+            int i, j;
+            int origin[81], result[81];
+            Core core;
+			Sudoku9 puzzle(
+				"000000000"
+				"000000000"
+				"000000000"
+				"000000000"
+				"000000000"
+				"000000000"
+				"000000000"
+				"000000000"
+				"000000000"), ans;
+            for (i = 0; i < 9; i += 1)
+            {
+                for (j = 0; j < 9; j += 1)
+                    origin[i * 9 + j] = puzzle.data[i][j];
+            }
+			Assert::IsTrue(core.solve(origin, result));
+            for (i = 0; i < 9; i += 1)
+            {
+                for (j = 0; j < 9; j += 1)
+                    ans.data[i][j] = result[i * 9 + j];
+            }
+			Assert::IsTrue(ans.isValid());
+			for (i = 0; i < 9; i += 1)
+			{
+				for (j = 0; j < 9; j += 1)
+				{
+					if (puzzle.data[i][j] > 0)
+						Assert::IsTrue(puzzle.data[i][j] == ans.data[i][j]);
+				}
+			}
+		}
+
+		TEST_METHOD(CheckCoreSolveNoSolution1)
+		{
+            int i, j;
+            int origin[81], result[81];
+            Core core;
+			Sudoku9 puzzle(
+				"801000000"
+				"003600000"
+				"070090200"
+				"050007000"
+				"000045700"
+				"000100030"
+				"001000068"
+				"008500010"
+				"090000400"), ans;
+            for (i = 0; i < 9; i += 1)
+            {
+                for (j = 0; j < 9; j += 1)
+                    origin[i * 9 + j] = puzzle.data[i][j];
+            }
+			Assert::IsFalse(core.solve(origin, result));
 		}
 	};
 }
