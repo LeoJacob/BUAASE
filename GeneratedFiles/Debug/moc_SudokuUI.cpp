@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SudokuUI_t {
-    QByteArrayData data[16];
-    char stringdata0[220];
+    QByteArrayData data[20];
+    char stringdata0[273];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,24 +37,30 @@ QT_MOC_LITERAL(2, 21, 0), // ""
 QT_MOC_LITERAL(3, 22, 5), // "int**"
 QT_MOC_LITERAL(4, 28, 4), // "ques"
 QT_MOC_LITERAL(5, 33, 15), // "iGenerateNumber"
-QT_MOC_LITERAL(6, 49, 21), // "refreshAboutSudokuBox"
-QT_MOC_LITERAL(7, 71, 15), // "responseGetTips"
-QT_MOC_LITERAL(8, 87, 14), // "responseFinish"
-QT_MOC_LITERAL(9, 102, 17), // "refreshLCDCurTime"
-QT_MOC_LITERAL(10, 120, 23), // "refreshPreAndNextButton"
-QT_MOC_LITERAL(11, 144, 15), // "responsePreGame"
-QT_MOC_LITERAL(12, 160, 16), // "responseNextGame"
-QT_MOC_LITERAL(13, 177, 11), // "refreshJump"
-QT_MOC_LITERAL(14, 189, 12), // "responseJump"
-QT_MOC_LITERAL(15, 202, 17) // "responsePlayAgain"
+QT_MOC_LITERAL(6, 49, 5), // "iMode"
+QT_MOC_LITERAL(7, 55, 21), // "refreshAboutSudokuBox"
+QT_MOC_LITERAL(8, 77, 15), // "responseGetTips"
+QT_MOC_LITERAL(9, 93, 14), // "responseFinish"
+QT_MOC_LITERAL(10, 108, 17), // "refreshLCDCurTime"
+QT_MOC_LITERAL(11, 126, 23), // "refreshPreAndNextButton"
+QT_MOC_LITERAL(12, 150, 15), // "responsePreGame"
+QT_MOC_LITERAL(13, 166, 16), // "responseNextGame"
+QT_MOC_LITERAL(14, 183, 11), // "refreshJump"
+QT_MOC_LITERAL(15, 195, 12), // "responseJump"
+QT_MOC_LITERAL(16, 208, 17), // "responsePlayAgain"
+QT_MOC_LITERAL(17, 226, 13), // "responsePause"
+QT_MOC_LITERAL(18, 240, 16), // "responseContinue"
+QT_MOC_LITERAL(19, 257, 15) // "responseGetHelp"
 
     },
     "SudokuUI\0receiveQues\0\0int**\0ques\0"
-    "iGenerateNumber\0refreshAboutSudokuBox\0"
+    "iGenerateNumber\0iMode\0refreshAboutSudokuBox\0"
     "responseGetTips\0responseFinish\0"
     "refreshLCDCurTime\0refreshPreAndNextButton\0"
     "responsePreGame\0responseNextGame\0"
-    "refreshJump\0responseJump\0responsePlayAgain"
+    "refreshJump\0responseJump\0responsePlayAgain\0"
+    "responsePause\0responseContinue\0"
+    "responseGetHelp"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,7 +70,7 @@ static const uint qt_meta_data_SudokuUI[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -72,20 +78,26 @@ static const uint qt_meta_data_SudokuUI[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    2,   69,    2, 0x0a /* Public */,
-       6,    0,   74,    2, 0x0a /* Public */,
-       7,    0,   75,    2, 0x0a /* Public */,
-       8,    0,   76,    2, 0x0a /* Public */,
-       9,    0,   77,    2, 0x0a /* Public */,
-      10,    0,   78,    2, 0x0a /* Public */,
-      11,    0,   79,    2, 0x0a /* Public */,
-      12,    0,   80,    2, 0x0a /* Public */,
-      13,    0,   81,    2, 0x0a /* Public */,
-      14,    0,   82,    2, 0x0a /* Public */,
-      15,    0,   83,    2, 0x0a /* Public */,
+       1,    3,   84,    2, 0x0a /* Public */,
+       7,    0,   91,    2, 0x0a /* Public */,
+       8,    0,   92,    2, 0x0a /* Public */,
+       9,    0,   93,    2, 0x0a /* Public */,
+      10,    0,   94,    2, 0x0a /* Public */,
+      11,    0,   95,    2, 0x0a /* Public */,
+      12,    0,   96,    2, 0x0a /* Public */,
+      13,    0,   97,    2, 0x0a /* Public */,
+      14,    0,   98,    2, 0x0a /* Public */,
+      15,    0,   99,    2, 0x0a /* Public */,
+      16,    0,  100,    2, 0x0a /* Public */,
+      17,    0,  101,    2, 0x0a /* Public */,
+      18,    0,  102,    2, 0x0a /* Public */,
+      19,    0,  103,    2, 0x0a /* Public */,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 3, QMetaType::Int,    4,    5,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::Int, QMetaType::Int,    4,    5,    6,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -106,7 +118,7 @@ void SudokuUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         SudokuUI *_t = static_cast<SudokuUI *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->receiveQues((*reinterpret_cast< int**(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 0: _t->receiveQues((*reinterpret_cast< int**(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 1: _t->refreshAboutSudokuBox(); break;
         case 2: _t->responseGetTips(); break;
         case 3: _t->responseFinish(); break;
@@ -117,6 +129,9 @@ void SudokuUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 8: _t->refreshJump(); break;
         case 9: _t->responseJump(); break;
         case 10: _t->responsePlayAgain(); break;
+        case 11: _t->responsePause(); break;
+        case 12: _t->responseContinue(); break;
+        case 13: _t->responseGetHelp(); break;
         default: ;
         }
     }
@@ -147,13 +162,13 @@ int SudokuUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 14)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 14;
     }
     return _id;
 }

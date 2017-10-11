@@ -23,7 +23,6 @@
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -37,7 +36,6 @@ public:
     QPushButton *okButton;
     QPushButton *cancelButton;
     QLineEdit *lineEditGenerationNumber;
-    QTextEdit *tips;
     QLineEdit *difficulty;
     QRadioButton *easy;
     QRadioButton *medium;
@@ -50,6 +48,8 @@ public:
     QSlider *hSliderMaxSpace;
     QCheckBox *uniqueSign;
     QLineEdit *generationNumber;
+    QRadioButton *custom;
+    QPushButton *getHelp;
 
     void setupUi(QDialog *Dialog)
     {
@@ -89,11 +89,6 @@ public:
         lineEditGenerationNumber->setFont(font);
         lineEditGenerationNumber->setAlignment(Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft);
         lineEditGenerationNumber->setReadOnly(true);
-        tips = new QTextEdit(Dialog);
-        tips->setObjectName(QStringLiteral("tips"));
-        tips->setEnabled(false);
-        tips->setGeometry(QRect(260, 80, 131, 41));
-        tips->setReadOnly(true);
         difficulty = new QLineEdit(Dialog);
         difficulty->setObjectName(QStringLiteral("difficulty"));
         difficulty->setEnabled(true);
@@ -102,12 +97,13 @@ public:
         easy = new QRadioButton(Dialog);
         easy->setObjectName(QStringLiteral("easy"));
         easy->setGeometry(QRect(60, 80, 51, 16));
+        easy->setChecked(true);
         medium = new QRadioButton(Dialog);
         medium->setObjectName(QStringLiteral("medium"));
-        medium->setGeometry(QRect(120, 80, 61, 16));
+        medium->setGeometry(QRect(130, 80, 61, 16));
         hard = new QRadioButton(Dialog);
         hard->setObjectName(QStringLiteral("hard"));
-        hard->setGeometry(QRect(190, 80, 61, 16));
+        hard->setGeometry(QRect(200, 80, 61, 16));
         minSpace = new QLineEdit(Dialog);
         minSpace->setObjectName(QStringLiteral("minSpace"));
         minSpace->setEnabled(false);
@@ -138,6 +134,12 @@ public:
         generationNumber->setGeometry(QRect(260, 20, 113, 20));
         generationNumber->setMaxLength(5);
         generationNumber->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        custom = new QRadioButton(Dialog);
+        custom->setObjectName(QStringLiteral("custom"));
+        custom->setGeometry(QRect(270, 80, 61, 16));
+        getHelp = new QPushButton(Dialog);
+        getHelp->setObjectName(QStringLiteral("getHelp"));
+        getHelp->setGeometry(QRect(200, 210, 181, 21));
 
         retranslateUi(Dialog);
         QObject::connect(okButton, SIGNAL(clicked()), Dialog, SLOT(accept()));
@@ -154,11 +156,6 @@ public:
         okButton->setText(QApplication::translate("Dialog", "OK", Q_NULLPTR));
         cancelButton->setText(QApplication::translate("Dialog", "Cancel", Q_NULLPTR));
         lineEditGenerationNumber->setText(QApplication::translate("Dialog", "\350\257\267\350\276\223\345\205\245\346\202\250\351\234\200\350\246\201\347\232\204\346\225\260\347\213\254\346\225\260\347\233\256", Q_NULLPTR));
-        tips->setHtml(QApplication::translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\344\272\262\357\274\214\351\232\276\345\272\246\344\270\216\344\270\213\351\235\242\347\232\204\351\200\211\351\241\271\344\270\215\350\203\275\345\220\214\346\227\266\351\200\211\346\213\251\345\223\246~</p></body></html>", Q_NULLPTR));
         difficulty->setText(QApplication::translate("Dialog", "\351\232\276\345\272\246", Q_NULLPTR));
         easy->setText(QApplication::translate("Dialog", "\347\256\200\345\215\225", Q_NULLPTR));
         medium->setText(QApplication::translate("Dialog", "\345\205\245\351\227\250", Q_NULLPTR));
@@ -166,6 +163,8 @@ public:
         minSpace->setText(QApplication::translate("Dialog", "\346\234\200\345\260\217\347\251\272\346\240\274\346\225\260", Q_NULLPTR));
         maxSpace->setText(QApplication::translate("Dialog", "\346\234\200\345\244\247\347\251\272\346\240\274\346\225\260", Q_NULLPTR));
         uniqueSign->setText(QApplication::translate("Dialog", "\346\210\221\345\217\252\346\203\263\345\201\232\346\234\211\345\224\257\344\270\200\350\247\243\347\232\204\346\225\260\347\213\254\351\242\230\357\274\201", Q_NULLPTR));
+        custom->setText(QApplication::translate("Dialog", "\350\207\252\345\256\232\344\271\211", Q_NULLPTR));
+        getHelp->setText(QApplication::translate("Dialog", "\344\270\215\347\237\245\351\201\223\346\200\216\344\271\210\351\200\211\357\274\237\347\202\271\346\210\221\345\260\261\347\237\245\351\201\223\345\225\246\357\274\201", Q_NULLPTR));
     } // retranslateUi
 
 };

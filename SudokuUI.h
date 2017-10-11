@@ -16,7 +16,8 @@ public:
 	Ui::SudokuUIClass ui;
 	GenetateNumber *generateDialog; 
 	QTimer *timer; 
-	QTime startTime, absTime, relativeTime, minTime;
+	QTime relativeTime, easyMinTime, mediumMinTime, hardMinTime, customMinTime;
+	QTime *minTime;
 	QWidget *cursorQWidget;
 	int **ques;
 	int iGenerateNumber;
@@ -33,9 +34,10 @@ public:
 	bool testAnswer();
 	void refreshLCDMinTime();
 	void keyPressEvent(QKeyEvent * event);
+	void refreshContinueButton();
 
 public slots:
-	void receiveQues(int **ques, int iGenerateNumber);
+	void receiveQues(int **ques, int iGenerateNumber, int iMode);
 	void refreshAboutSudokuBox();
 	void responseGetTips();
 	void responseFinish();
@@ -46,4 +48,7 @@ public slots:
 	void refreshJump();
 	void responseJump();
 	void responsePlayAgain();
+	void responsePause();
+	void responseContinue();
+	void responseGetHelp();
 };

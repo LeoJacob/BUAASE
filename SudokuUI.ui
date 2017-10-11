@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>649</width>
-    <height>554</height>
+    <width>642</width>
+    <height>502</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -3523,9 +3523,9 @@
    <widget class="QPushButton" name="getTips">
     <property name="geometry">
      <rect>
-      <x>444</x>
+      <x>450</x>
       <y>350</y>
-      <width>81</width>
+      <width>71</width>
       <height>23</height>
      </rect>
     </property>
@@ -3536,9 +3536,9 @@
    <widget class="QPushButton" name="finish">
     <property name="geometry">
      <rect>
-      <x>444</x>
+      <x>450</x>
       <y>390</y>
-      <width>81</width>
+      <width>71</width>
       <height>23</height>
      </rect>
     </property>
@@ -3551,7 +3551,7 @@
      <rect>
       <x>550</x>
       <y>390</y>
-      <width>81</width>
+      <width>71</width>
       <height>23</height>
      </rect>
     </property>
@@ -3562,10 +3562,10 @@
    <widget class="QLCDNumber" name="LCDCurTimeCost">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>80</y>
-      <width>91</width>
-      <height>23</height>
+      <x>550</x>
+      <y>50</y>
+      <width>81</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -3578,7 +3578,7 @@
      </font>
     </property>
     <property name="digitCount">
-     <number>10</number>
+     <number>8</number>
     </property>
    </widget>
    <widget class="QLineEdit" name="curTimecost">
@@ -3589,9 +3589,12 @@
      <rect>
       <x>450</x>
       <y>50</y>
-      <width>91</width>
+      <width>71</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
     </property>
     <property name="text">
      <string>当前耗时：</string>
@@ -3607,8 +3610,8 @@
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>120</y>
-      <width>91</width>
+      <y>80</y>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -3622,10 +3625,10 @@
    <widget class="QLCDNumber" name="LCDMinTimeCost">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>150</y>
-      <width>91</width>
-      <height>23</height>
+      <x>550</x>
+      <y>80</y>
+      <width>81</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -3637,15 +3640,15 @@
      </font>
     </property>
     <property name="digitCount">
-     <number>10</number>
+     <number>8</number>
     </property>
    </widget>
    <widget class="QPushButton" name="preGame">
     <property name="geometry">
      <rect>
-      <x>444</x>
+      <x>450</x>
       <y>310</y>
-      <width>81</width>
+      <width>71</width>
       <height>23</height>
      </rect>
     </property>
@@ -3658,7 +3661,7 @@
      <rect>
       <x>550</x>
       <y>310</y>
-      <width>81</width>
+      <width>71</width>
       <height>23</height>
      </rect>
     </property>
@@ -3671,7 +3674,7 @@
      <rect>
       <x>550</x>
       <y>350</y>
-      <width>81</width>
+      <width>71</width>
       <height>23</height>
      </rect>
     </property>
@@ -3686,7 +3689,7 @@
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>190</y>
+      <y>140</y>
       <width>71</width>
       <height>20</height>
      </rect>
@@ -3702,7 +3705,7 @@
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>190</y>
+      <y>140</y>
       <width>41</width>
       <height>20</height>
      </rect>
@@ -3715,7 +3718,7 @@
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>230</y>
+      <y>170</y>
       <width>71</width>
       <height>20</height>
      </rect>
@@ -3728,7 +3731,7 @@
     <property name="geometry">
      <rect>
       <x>550</x>
-      <y>230</y>
+      <y>170</y>
       <width>41</width>
       <height>20</height>
      </rect>
@@ -3738,7 +3741,7 @@
     <property name="geometry">
      <rect>
       <x>530</x>
-      <y>270</y>
+      <y>200</y>
       <width>41</width>
       <height>20</height>
      </rect>
@@ -3751,7 +3754,7 @@
     <property name="geometry">
      <rect>
       <x>590</x>
-      <y>270</y>
+      <y>200</y>
       <width>41</width>
       <height>23</height>
      </rect>
@@ -3767,7 +3770,7 @@
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>270</y>
+      <y>200</y>
       <width>71</width>
       <height>20</height>
      </rect>
@@ -3779,13 +3782,93 @@
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QLineEdit" name="difficulty">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>110</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="text">
+     <string>游戏难度：</string>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="difficultyContent">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>110</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::StrongFocus</enum>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pauseButton">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>270</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>暂停游戏</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="getHelp">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>235</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>忘了怎么玩？点我全知道！</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="continueButton">
+    <property name="geometry">
+     <rect>
+      <x>550</x>
+      <y>270</y>
+      <width>71</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>继续游戏</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>649</width>
+     <width>642</width>
      <height>23</height>
     </rect>
    </property>

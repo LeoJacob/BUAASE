@@ -21,10 +21,15 @@ public:
 	~GenetateNumber();
 	bool testGenerateNumber();	//检查输入的数独数目是否合法
 	void closeEvent(QCloseEvent * event);
+	void refreshHSliderMinSpace();
+	void refreshHSliderMaxSpace();
+	void refreshUniqueSign();
 signals:
-	void generateSuccessfully(int **result, int iGenerateNumber);
+	void generateSuccessfully(int **result, int iGenerateNumber, int iMode);
 public slots :
 	void responseOK();
 	void refreshOKStatus();		//更新ok按钮状态
+	void responseCustomStatusChanged();
+	void responseGetHelp();
 };
 

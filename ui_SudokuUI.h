@@ -26,7 +26,10 @@
 #define LINE_WIDTH 5
 #define MAX_GENERATE_NUMBER 10000
 #define ZERO 0
-
+#define EASY_CODE "\347\256\200\345\215\225"
+#define MEDIUM_CODE "\345\205\245\351\227\250"
+#define HARD_CODE "\345\233\260\351\232\276"
+#define CUSTOM_CODE "\350\207\252\345\256\232\344\271\211"
 
 
 QT_BEGIN_NAMESPACE
@@ -55,6 +58,12 @@ public:
 	QLineEdit *chooseGameContent;
 	QPushButton *jump;
 	QLineEdit *chooseGame;
+	QLineEdit *difficulty;
+	QLineEdit *difficultyContent;
+	QPushButton *pauseButton;
+	QPushButton *getHelp;
+	QPushButton *continueButton;
+
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -64,7 +73,7 @@ public:
     {
         if (SudokuUIClass->objectName().isEmpty())
             SudokuUIClass->setObjectName(QStringLiteral("SudokuUIClass"));
-        SudokuUIClass->resize(649, 554);
+        SudokuUIClass->resize(649, 502);
         centralWidget = new QWidget(SudokuUIClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
 
@@ -109,15 +118,15 @@ public:
 		}
 
         getTips = new QPushButton(centralWidget);
-		getTips->setGeometry(QRect(444, 350, 81, 23));
+		getTips->setGeometry(QRect(450, 350, 71, 23));
         finish = new QPushButton(centralWidget);
-		finish->setGeometry(QRect(444, 390, 81, 23));
+		finish->setGeometry(QRect(450, 390, 71, 23));
         _quit = new QPushButton(centralWidget);
-        _quit->setGeometry(QRect(550, 390, 81, 23));
+		_quit->setGeometry(QRect(550, 390, 71, 23));
 
 		LCDCurTimeCost = new QLCDNumber(centralWidget);
 		LCDCurTimeCost->setObjectName(QStringLiteral("LCDCurTimeCost"));
-		LCDCurTimeCost->setGeometry(QRect(450, 80, 91, 23));
+		LCDCurTimeCost->setGeometry(QRect(550, 50, 81, 21));
 		QFont font1;
 		font1.setFamily(QStringLiteral("Arial"));
 		font1.setPointSize(14);
@@ -129,19 +138,19 @@ public:
 		LCDCurTimeCost->setSegmentStyle(QLCDNumber::Flat);
 		curTimecost = new QLineEdit(centralWidget);
 		curTimecost->setObjectName(QStringLiteral("curTimecost"));
-		curTimecost->setGeometry(QRect(450, 50, 91, 20));
+		curTimecost->setGeometry(QRect(450, 50, 71, 20));
 		curTimecost->setReadOnly(true);
 		curTimecost->setStyleSheet("background:transparent;border-width:0;border-style:outset");
 		curTimecost->setDisabled(true);
 		minTimeCost = new QLineEdit(centralWidget);
 		minTimeCost->setObjectName(QStringLiteral("minTimeCost"));
-		minTimeCost->setGeometry(QRect(450, 120, 91, 20));
+		minTimeCost->setGeometry(QRect(450, 80, 71, 20));
 		minTimeCost->setReadOnly(true);
 		minTimeCost->setStyleSheet("background:transparent;border-width:0;border-style:outset");
 		minTimeCost->setDisabled(true);
 		LCDMinTimeCost = new QLCDNumber(centralWidget);
 		LCDMinTimeCost->setObjectName(QStringLiteral("LCDMinTimeCost"));
-		LCDMinTimeCost->setGeometry(QRect(450, 150, 91, 23));
+		LCDMinTimeCost->setGeometry(QRect(550, 80, 81, 21));
 		LCDMinTimeCost->setSegmentStyle(QLCDNumber::Flat);
 		QFont font2;
 		font2.setFamily(QStringLiteral("Arial"));
@@ -153,49 +162,73 @@ public:
 
 		preGame = new QPushButton(centralWidget);
 		preGame->setObjectName(QStringLiteral("preGame"));
-		preGame->setGeometry(QRect(444, 310, 81, 23));
+		preGame->setGeometry(QRect(450, 310, 71, 23));
 		nextGame = new QPushButton(centralWidget);
 		nextGame->setObjectName(QStringLiteral("nextGame"));
-		nextGame->setGeometry(QRect(550, 310, 81, 23));
+		nextGame->setGeometry(QRect(550, 310, 71, 23));
 		playAgain = new QPushButton(centralWidget);
 		playAgain->setObjectName(QStringLiteral("playAgain"));
-		playAgain->setGeometry(QRect(550, 350, 81, 23));
+		playAgain->setGeometry(QRect(550, 350, 71, 23));
 		currentGame = new QLineEdit(centralWidget);
 		currentGame->setObjectName(QStringLiteral("currentGame"));
 		currentGame->setEnabled(false);
-		currentGame->setGeometry(QRect(450, 190, 71, 20));
+		currentGame->setGeometry(QRect(450, 140, 71, 20));
 		currentGame->setReadOnly(true);
 		currentGame->setStyleSheet("background:transparent;border-width:0;border-style:outset");
 		curGameNumberContent = new QLineEdit(centralWidget);
 		curGameNumberContent->setObjectName(QStringLiteral("curGameNumberContent"));
-		curGameNumberContent->setGeometry(QRect(550, 190, 41, 20));
+		curGameNumberContent->setGeometry(QRect(550, 140, 41, 20));
 		curGameNumberContent->setStyleSheet("background:transparent;border-width:0;border-style:outset");
 		curGameNumberContent->setReadOnly(true);
 		totalGameNumber = new QLineEdit(centralWidget);
 		totalGameNumber->setObjectName(QStringLiteral("totalGameNumber"));
 		totalGameNumber->setEnabled(false);
-		totalGameNumber->setGeometry(QRect(450, 230, 71, 20));
+		totalGameNumber->setGeometry(QRect(450, 170, 71, 20));
 		totalGameNumber->setStyleSheet("background:transparent;border-width:0;border-style:outset");
 		totalGameNumberContent = new QLineEdit(centralWidget);
 		totalGameNumberContent->setObjectName(QStringLiteral("totalGameNumberContent"));
-		totalGameNumberContent->setGeometry(QRect(550, 230, 41, 20));
+		totalGameNumberContent->setGeometry(QRect(550, 170, 41, 20));
 		totalGameNumberContent->setStyleSheet("background:transparent;border-width:0;border-style:outset");
 		totalGameNumberContent->setReadOnly(true);
 		chooseGameContent = new QLineEdit(centralWidget);
 		chooseGameContent->setObjectName(QStringLiteral("chooseGameContent"));
-		chooseGameContent->setGeometry(QRect(530, 270, 41, 20));
+		chooseGameContent->setGeometry(QRect(530, 200, 41, 20));
 		chooseGameContent->setMaxLength(5);
 		chooseGameContent->setAlignment(Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter);
 		chooseGameContent->setValidator(new QIntValidator(1, 10000, chooseGameContent));
 		jump = new QPushButton(centralWidget);
 		jump->setObjectName(QStringLiteral("jump"));
-		jump->setGeometry(QRect(590, 270, 41, 23));
+		jump->setGeometry(QRect(590, 200, 41, 23));
 		chooseGame = new QLineEdit(centralWidget);
 		chooseGame->setObjectName(QStringLiteral("chooseGame"));
 		chooseGame->setEnabled(false);
-		chooseGame->setGeometry(QRect(450, 270, 71, 20));
+		chooseGame->setGeometry(QRect(450, 200, 71, 20));
 		chooseGame->setReadOnly(true);
 		chooseGame->setStyleSheet("background:transparent;border-width:0;border-style:outset");
+
+		difficulty = new QLineEdit(centralWidget);
+		difficulty->setObjectName(QStringLiteral("difficulty"));
+		difficulty->setEnabled(false);
+		difficulty->setGeometry(QRect(450, 110, 71, 20));
+		difficulty->setFocusPolicy(Qt::StrongFocus);
+		difficulty->setReadOnly(true);
+		difficulty->setStyleSheet("background:transparent;border-width:0;border-style:outset");
+		difficultyContent = new QLineEdit(centralWidget);
+		difficultyContent->setObjectName(QStringLiteral("difficultyContent"));
+		difficultyContent->setEnabled(false);
+		difficultyContent->setGeometry(QRect(550, 110, 71, 20));
+		difficultyContent->setFocusPolicy(Qt::StrongFocus);
+		difficultyContent->setReadOnly(true);
+		difficultyContent->setStyleSheet("background:transparent;border-width:0;border-style:outset");
+		pauseButton = new QPushButton(centralWidget);
+		pauseButton->setObjectName(QStringLiteral("pauseButton"));
+		pauseButton->setGeometry(QRect(450, 270, 71, 23));
+		continueButton = new QPushButton(centralWidget);
+		continueButton->setObjectName(QStringLiteral("continueButton"));
+		continueButton->setGeometry(QRect(550, 270, 71, 23));
+		getHelp = new QPushButton(centralWidget);
+		getHelp->setObjectName(QStringLiteral("getHelp"));
+		getHelp->setGeometry(QRect(450, 235, 171, 21));
 
         SudokuUIClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(SudokuUIClass);
@@ -239,6 +272,10 @@ public:
 		totalGameNumber->setText(QApplication::translate("SudokuUIClass", "\345\205\263\345\215\241\346\200\273\346\225\260\357\274\232", Q_NULLPTR));
 		jump->setText(QApplication::translate("SudokuUIClass", "\350\267\263\350\275\254", Q_NULLPTR));
 		chooseGame->setText(QApplication::translate("SudokuUIClass", "\351\200\211\346\213\251\345\205\263\345\215\241\357\274\232", Q_NULLPTR));
+		difficulty->setText(QApplication::translate("SudokuUIClass", "\346\270\270\346\210\217\351\232\276\345\272\246\357\274\232", Q_NULLPTR));
+		pauseButton->setText(QApplication::translate("SudokuUIClass", "\346\232\202\345\201\234\346\270\270\346\210\217", Q_NULLPTR));
+		getHelp->setText(QApplication::translate("SudokuUIClass", "\345\277\230\344\272\206\346\200\216\344\271\210\347\216\251\357\274\237\347\202\271\346\210\221\345\205\250\347\237\245\351\201\223\357\274\201", Q_NULLPTR));
+		continueButton->setText(QApplication::translate("SudokuUIClass", "\347\273\247\347\273\255\346\270\270\346\210\217", Q_NULLPTR));
     } // retranslateUi
 
 };
