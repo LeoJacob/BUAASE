@@ -2,8 +2,6 @@
 #include <vector>
 #include <algorithm>
 
-using namespace std;
-
 class DLXNode
 {
 public:
@@ -16,31 +14,39 @@ public:
 class DLXSolver
 {
 private:
-	bool flag = false;
+	bool flag = false, duplicate = false;
 	DLXNode *head = NULL;
-	vector<int> choose, res;
+	std::vector<int> choose, res;
+    std::vector<DLXNode *> pre;
 
 	int pid = 0;
-	vector<DLXNode *> pool;
+    int cnt = 0;
+	std::vector<DLXNode *> pool;
 
 	void coverColumn(DLXNode *colHead);
 
 	void uncoverColumn(DLXNode *colHead);
 
-	void dfs();
+	void dfs(int level, bool init);
+
+    void onlyDFS();
 
 	inline DLXNode *allocateNode();
 
 public:
 	DLXSolver();
 
-	DLXSolver(vector<pair<int, int> > &ones, int colCnt);
+	DLXSolver(std::vector<std::pair<int, int> > &ones, int colCnt);
 
 	~DLXSolver();
 
-	void set(vector<pair<int, int> > &ones, int colCnt);
+	void set(std::vector<std::pair<int, int> > &ones, int colCnt);
 
 	bool solve();
 
-	vector<int> solution();
+    bool onlyOne();
+
+    int size();
+
+	std::vector<int> solution();
 };
