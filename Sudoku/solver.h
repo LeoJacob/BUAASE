@@ -43,5 +43,7 @@ public:
 
 	bool solve();
 
+    int onlyOne();
+
 	Sudoku9 solution();
 };

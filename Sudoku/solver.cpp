@@ -4,8 +4,6 @@
 #include "solver.h"
 #include "dlx.h"
 
-using namespace std;
-
 inline int Sudoku9NaiveSolver::blockId(int x, int y)
 {
 	return x / 3 * 3 + y / 3;
@@ -138,7 +136,7 @@ void Sudoku9DLXSolver::set(Sudoku9 __puzzle)
 {
 	int i, j, k, ban, mask;
 	int row[9] = {}, col[9] = {}, block[9] = {};
-	static vector<pair<int, int> > ones;
+	static std::vector<std::pair<int, int> > ones;
 	ones.erase(ones.begin(), ones.end());
 	puzzle = __puzzle;
 	for (i = 0; i < 9; i += 1)
@@ -151,10 +149,10 @@ void Sudoku9DLXSolver::set(Sudoku9 __puzzle)
 			row[i] |= mask;
 			col[j] |= mask;
 			block[blockId(i, j)] |= mask;
-			ones.push_back(make_pair(rowId(i, j, puzzle.data[i][j]), i * 9 + puzzle.data[i][j] - 1));
-			ones.push_back(make_pair(rowId(i, j, puzzle.data[i][j]), 81 + j * 9 + puzzle.data[i][j] - 1));
-			ones.push_back(make_pair(rowId(i, j, puzzle.data[i][j]), 162 + blockId(i, j) * 9 + puzzle.data[i][j] - 1));
-			ones.push_back(make_pair(rowId(i, j, puzzle.data[i][j]), 243 + i * 9 + j));
+			ones.push_back(std::make_pair(rowId(i, j, puzzle.data[i][j]), i * 9 + puzzle.data[i][j] - 1));
+			ones.push_back(std::make_pair(rowId(i, j, puzzle.data[i][j]), 81 + j * 9 + puzzle.data[i][j] - 1));
+			ones.push_back(std::make_pair(rowId(i, j, puzzle.data[i][j]), 162 + blockId(i, j) * 9 + puzzle.data[i][j] - 1));
+			ones.push_back(std::make_pair(rowId(i, j, puzzle.data[i][j]), 243 + i * 9 + j));
 		}
 	}
 	for (i = 0; i < 9; i += 1)
@@ -167,10 +165,10 @@ void Sudoku9DLXSolver::set(Sudoku9 __puzzle)
 				mask = 1 << (k - 1);
 				if (ban & mask)
 					continue;
-				ones.push_back(make_pair(rowId(i, j, k), i * 9 + k - 1));
-				ones.push_back(make_pair(rowId(i, j, k), 81 + j * 9 + k - 1));
-				ones.push_back(make_pair(rowId(i, j, k), 162 + blockId(i, j) * 9 + k - 1));
-				ones.push_back(make_pair(rowId(i, j, k), 243 + i * 9 + j));
+				ones.push_back(std::make_pair(rowId(i, j, k), i * 9 + k - 1));
+				ones.push_back(std::make_pair(rowId(i, j, k), 81 + j * 9 + k - 1));
+				ones.push_back(std::make_pair(rowId(i, j, k), 162 + blockId(i, j) * 9 + k - 1));
+				ones.push_back(std::make_pair(rowId(i, j, k), 243 + i * 9 + j));
 			}
 		}
 	}
@@ -182,10 +180,16 @@ bool Sudoku9DLXSolver::solve()
 	return solver.solve();
 }
 
+int Sudoku9DLXSolver::onlyOne()
+{
+    bool r = solver.onlyOne();
+    return r ? solver.size() : -1;
+}
+
 Sudoku9 Sudoku9DLXSolver::solution()
 {
 	int i, x, y, z;
-	vector<int> res;
+	std::vector<int> res;
 	Sudoku9 ans;
 	res = solver.solution();
 	for (i = 0; i < res.size(); i += 1)
