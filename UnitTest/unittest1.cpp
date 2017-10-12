@@ -13,6 +13,68 @@ namespace UnitTest
 	TEST_CLASS(UnitTest1)
 	{
 	public:
+
+		TEST_METHOD(CheckValidPuzzle1)
+		{
+			Sudoku9 puzzle(
+				"800000000"
+				"003600000"
+				"070090200"
+				"050007000"
+				"000045700"
+				"000100030"
+				"001000068"
+				"008500010"
+				"090000400");
+            Assert::IsTrue(puzzle.isValidPuzzle());
+		}
+
+		TEST_METHOD(CheckValidPuzzle2)
+		{
+			Sudoku9 puzzle(
+				"880000000"
+				"003600000"
+				"070090200"
+				"050007000"
+				"000045700"
+				"000100030"
+				"001000068"
+				"008500010"
+				"090000400");
+            Assert::IsTrue(puzzle.isValidPuzzle());
+		}
+
+		TEST_METHOD(CheckValidPuzzle3)
+		{
+			Sudoku9 puzzle(
+				"880000000"
+				"003600000"
+				"070090200"
+				"050007000"
+				"000045700"
+				"000100030"
+				"001000068"
+				"008500010"
+				"090000400");
+            puzzle.data[0][0] = -1;
+            Assert::IsFalse(puzzle.isValidPuzzle());
+		}
+
+		TEST_METHOD(CheckValidPuzzle4)
+		{
+			Sudoku9 puzzle(
+				"880000000"
+				"003600000"
+				"070090200"
+				"050007000"
+				"000045700"
+				"000100030"
+				"001000068"
+				"008500010"
+				"090000400");
+            puzzle.data[8][8] = 10;
+            Assert::IsFalse(puzzle.isValidPuzzle());
+		}
 		
 		TEST_METHOD(HasSolution1)
 		{
@@ -754,6 +816,119 @@ namespace UnitTest
                     origin[i * 9 + j] = puzzle.data[i][j];
             }
 			Assert::IsFalse(core.solve(origin, result));
+		}
+
+		TEST_METHOD(CheckSolveException)
+		{
+            int i, j;
+            int origin[81], result[81];
+            bool catchException = false;
+            Core core;
+			Sudoku9 puzzle(
+				"800000000"
+				"003600000"
+				"070090200"
+				"050007000"
+				"000045700"
+				"000100030"
+				"001000068"
+				"008500010"
+				"090000400"), ans;
+            for (i = 0; i < 9; i += 1)
+            {
+                for (j = 0; j < 9; j += 1)
+                    origin[i * 9 + j] = puzzle.data[i][j];
+            }
+            origin[80] = -1;
+            try {
+                core.solve(origin, result);
+            }
+            catch (std::invalid_argument e)
+            {
+                catchException = true;
+                Logger::WriteMessage(e.what());
+            }
+            Assert::IsTrue(catchException);
+		}
+
+		TEST_METHOD(CheckGenerateException1)
+		{
+            int result[10][81];
+            bool catchException = false;
+            Core core;
+            try {
+                core.generate(10, 4, result);
+            }
+            catch (std::invalid_argument e)
+            {
+                catchException = true;
+                Logger::WriteMessage(e.what());
+            }
+            Assert::IsTrue(catchException);
+		}
+
+		TEST_METHOD(CheckGenerateException2)
+		{
+            int result[10][81];
+            bool catchException = false;
+            Core core;
+            try {
+                core.generate(10, -1, result);
+            }
+            catch (std::invalid_argument e)
+            {
+                catchException = true;
+                Logger::WriteMessage(e.what());
+            }
+            Assert::IsTrue(catchException);
+		}
+
+		TEST_METHOD(CheckGenerateException3)
+		{
+            int result[10][81];
+            bool catchException = false;
+            Core core;
+            try {
+                core.generate(10, -1, 0, true, result);
+            }
+            catch (std::invalid_argument e)
+            {
+                catchException = true;
+                Logger::WriteMessage(e.what());
+            }
+            Assert::IsTrue(catchException);
+		}
+
+		TEST_METHOD(CheckGenerateException4)
+		{
+            int result[10][81];
+            bool catchException = false;
+            Core core;
+            try {
+                core.generate(10, 65, 0, true, result);
+            }
+            catch (std::invalid_argument e)
+            {
+                catchException = true;
+                Logger::WriteMessage(e.what());
+            }
+            Assert::IsTrue(catchException);
+		}
+
+		TEST_METHOD(CheckGenerateException5)
+		{
+            int result[10][81];
+            bool catchException = false;
+            Core core;
+            try {
+                core.generate(10, 30, 0, true, result);
+            }
+            catch (std::invalid_argument e)
+            {
+                catchException = true;
+                Logger::WriteMessage(e.what());
+            }
+            Assert::IsTrue(catchException);
 		}
 	};
 }
