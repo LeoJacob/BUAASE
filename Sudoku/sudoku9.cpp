@@ -99,23 +99,12 @@ Sudoku9Node Sudoku9::node()
 bool Sudoku9::isValidPuzzle()
 {
 	int i, j;
-	int block[9] = {}, row[9] = {}, col[9] = {};
-	int mask;
 	for (i = 0; i < 9; i += 1)
 	{
 		for (j = 0; j < 9; j += 1)
 		{
 			if (data[i][j] > 9 || data[i][j] < 0)
 				return false;
-            if (data[i][j])
-            {
-                mask = 1 << (data[i][j] - 1);
-                if (row[i] & mask || col[j] & mask || block[blockId(i, j)] & mask)
-                    return false;
-                row[i] |= mask;
-                col[j] |= mask;
-                block[blockId(i, j)] |= mask;
-            }
 		}
 	}
 	return true;
@@ -124,9 +113,9 @@ bool Sudoku9::isValidPuzzle()
 Sudoku9 Sudoku9::normForm()
 {
     int i, j;
-    int permutation[12];
+    int permutation[12] = {};
     Sudoku9 res;
-    for (i = 0; i < 10; i += 1)
+    for (i = 1; i < 10; i += 1)
         permutation[data[0][i - 1]] = i;
     for (i = 0; i < 9; i += 1)
     {
