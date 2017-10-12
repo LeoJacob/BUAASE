@@ -24,7 +24,8 @@ bool Core::solve(int puzzle[81], int solution[81])
             __puzzle.data[i][j] = puzzle[i * 9 + j];
     }
 
-    //TODO: check __puzzle is a valid puzzle
+    if (!__puzzle.isValidPuzzle())
+        throw std::invalid_argument("The puzzle is not valid!");
 
     solver.set(__puzzle);
     res = solver.solve();
