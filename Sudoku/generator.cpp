@@ -340,6 +340,18 @@ Sudoku9(
 
 void Sudoku9Generator::__generate(int number, int lowerBlank, int upperBlank, int lowerSize, int upperSize, int result[][81])
 {
+    if (!(0 <= lowerBlank && lowerBlank <= 64))
+        throw std::invalid_argument("lowerBlank should be in [0, 64]!");
+    if (!(upperBlank < 0 || (lowerBlank <= upperBlank)))
+        throw std::invalid_argument("When upperBlank is valid, lowerBlank should be less than or equal to upperBlank!");
+    if(!(upperBlank <= 64))
+        throw std::invalid_argument("When upperBlank is valid, it should be less than 64!");
+    if(!(lowerSize < 0 || 81 <= lowerSize))
+        throw std::invalid_argument("When lowerSize is valid, it should be greater than or equal to 81!");
+    if(!(upperSize < 0 || 81 <= upperSize))
+        throw std::invalid_argument("When upperSize is valid, it should be greater than or equal to 81!");
+    if(!(upperSize < 0 || lowerSize < 0 || lowerSize <= upperSize))
+        throw std::invalid_argument("When both lowerSize and upperSize are valid, lowerSize should be less than or equal to upperSize!");
     assert(0 <= lowerBlank && lowerBlank <= 64);
     assert(upperBlank < 0 || (lowerBlank <= upperBlank && upperBlank <= 64));
     assert(lowerSize < 0 || 81 <= lowerSize);
@@ -433,7 +445,7 @@ void loadNSudoku9FromFile(int number, const char *filename, int result[][81])
     {
         std::random_shuffle(permutation + 1, permutation + 10);
         for (j = 0; j < 81; j += 1)
-            result[i][j] = permutation[repository[i][j] - '0'];
+            result[i][j] = permutation[repository[i % repository.size()][j] - '0'];
     }
 }
 
@@ -483,6 +495,8 @@ void Sudoku9Generator::generate(int number, int mode, int result[][81])
     case 3:
         generateMode3(number, result);
         break;
+    default:
+        throw std::invalid_argument("mode should be in {1, 2, 3}!");
     }
 }
 
