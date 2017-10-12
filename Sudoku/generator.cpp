@@ -6,7 +6,7 @@
 #include "solver.h"
 #include "generator.h"
 
-#define DEBUG 0
+//#define DEBUG 0
 //#define GENERATE 0
 
 void NaiveSudoku9Generator::cantorExpand(int id, int perm[], int n)
