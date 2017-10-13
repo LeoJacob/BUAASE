@@ -34,7 +34,6 @@ GenetateNumber::GenetateNumber(QDialog *parent)
 
 GenetateNumber::~GenetateNumber()
 {
-	delete(result);
 }
 
 void GenetateNumber::responseOK()
@@ -70,41 +69,25 @@ void GenetateNumber::responseOK()
 			return;
 		}
 	}
+
 ACCEPT:
-	int **result = new int*[iGenerateNumber];
+	int(*temp)[81] = new int[10000][81];		
+	result = new int*[iGenerateNumber];
 	for (i = 0; i < iGenerateNumber; i++)
 		result[i] = new int[81];
-	if (iMode == 0){}
-		//generate(iGenerateNumber, iMinSpace, iMaxSpace, bUnique, result);
-	else{}
-		//generate(iGenerateNumber, iMode, result);
+	if (iMode == 0)
+		c.generate(iGenerateNumber, iMinSpace, iMaxSpace, bUnique, temp);
+	else
+		c.generate(iGenerateNumber, iMode, temp);
+		
 	
-	int temp[81] = {0, 2, 3, 4, 0, 6, 7, 8, 0,
-				 4, 5, 6, 7, 8, 9, 1, 2, 3,
-				 7, 8, 9, 0, 2, 3, 4, 5, 6,
-				 2, 3, 1, 0, 6, 0, 8, 9, 7,
-				 0, 6, 4, 8, 9, 7, 2, 3, 0,
-				 8, 9, 7, 0, 3, 0, 5, 6, 4,
-				 3, 1, 2, 6, 4, 5, 9, 0, 8,
-				 6, 4, 5, 9, 7, 0, 3, 1, 2,
-				 0, 7, 8, 3, 0, 2, 6, 4, 0};
-	int temp_2[81] = { 1, 2, 3, 4, 5, 6, 7, 8, 9,
-		4, 5, 6, 7, 8, 9, 1, 2, 3,
-		7, 8, 9, 0, 2, 3, 4, 5, 6,
-		2, 3, 1, 0, 6, 0, 8, 9, 7,
-		0, 6, 4, 8, 9, 7, 2, 3, 0,
-		8, 9, 7, 0, 3, 0, 5, 6, 4,
-		3, 1, 2, 6, 4, 5, 9, 0, 8,
-		6, 4, 5, 9, 7, 0, 3, 1, 2,
-		0, 7, 8, 3, 0, 2, 6, 4, 0 };
-	for (i = 0; i < 81; i++) 
+	for (i = 0; i < iGenerateNumber; i++)
 	{
-		result[0][i] = temp[i];
-		if (iGenerateNumber == 2)
-			result[1][i] = temp_2[i];
+		for (j = 0; j < 81; j++)
+			result[i][j] = temp[i][j];
 	}
-	
-	emit generateSuccessfully(result, iGenerateNumber, iMode);
+	delete[] temp;
+	emit generateSuccessfully();
 	this->accept();
 }
 

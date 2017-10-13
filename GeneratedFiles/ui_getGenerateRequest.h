@@ -50,6 +50,7 @@ public:
     QLineEdit *generationNumber;
     QRadioButton *custom;
     QPushButton *getHelp;
+    QLineEdit *tips;
 
     void setupUi(QDialog *Dialog)
     {
@@ -128,7 +129,7 @@ public:
         hSliderMaxSpace->setOrientation(Qt::Horizontal);
         uniqueSign = new QCheckBox(Dialog);
         uniqueSign->setObjectName(QStringLiteral("uniqueSign"));
-        uniqueSign->setGeometry(QRect(10, 210, 181, 16));
+        uniqueSign->setGeometry(QRect(10, 200, 181, 16));
         generationNumber = new QLineEdit(Dialog);
         generationNumber->setObjectName(QStringLiteral("generationNumber"));
         generationNumber->setGeometry(QRect(260, 20, 113, 20));
@@ -139,7 +140,12 @@ public:
         custom->setGeometry(QRect(270, 80, 61, 16));
         getHelp = new QPushButton(Dialog);
         getHelp->setObjectName(QStringLiteral("getHelp"));
-        getHelp->setGeometry(QRect(200, 210, 181, 21));
+        getHelp->setGeometry(QRect(200, 200, 181, 21));
+        tips = new QLineEdit(Dialog);
+        tips->setObjectName(QStringLiteral("tips"));
+        tips->setEnabled(false);
+        tips->setGeometry(QRect(10, 230, 241, 20));
+        tips->setReadOnly(true);
 
         retranslateUi(Dialog);
         QObject::connect(okButton, SIGNAL(clicked()), Dialog, SLOT(accept()));
@@ -165,6 +171,7 @@ public:
         uniqueSign->setText(QApplication::translate("Dialog", "\346\210\221\345\217\252\346\203\263\345\201\232\346\234\211\345\224\257\344\270\200\350\247\243\347\232\204\346\225\260\347\213\254\351\242\230\357\274\201", Q_NULLPTR));
         custom->setText(QApplication::translate("Dialog", "\350\207\252\345\256\232\344\271\211", Q_NULLPTR));
         getHelp->setText(QApplication::translate("Dialog", "\344\270\215\347\237\245\351\201\223\346\200\216\344\271\210\351\200\211\357\274\237\347\202\271\346\210\221\345\260\261\347\237\245\351\201\223\345\225\246\357\274\201", Q_NULLPTR));
+        tips->setText(QApplication::translate("Dialog", "\347\224\237\346\210\220\346\225\260\347\213\254\346\227\266\351\227\264\350\276\203\351\225\277\357\274\214\350\257\267\350\200\220\345\277\203\347\255\211\345\276\205\345\223\246~", Q_NULLPTR));
     } // retranslateUi
 
 };

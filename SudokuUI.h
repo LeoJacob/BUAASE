@@ -38,7 +38,7 @@ protected:
 	void keyPressEvent(QKeyEvent * event);
 
 public slots:
-	void receiveQues(int **ques, int iGenerateNumber, int iMode);
+	void receiveQues();
 	void refreshAboutSudokuBox();
 	void responseGetTips(int rowId, int colId);
 	void responseFinish();

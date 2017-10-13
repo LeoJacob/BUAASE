@@ -1,9 +1,12 @@
 #pragma once
+//#pragma comment(lib, "sudoku.lib")
 
 #include <QDialog>  
 #include "ui_getGenerateRequest.h"
 #include <QCloseEvent>
 #include <QMessageBox>
+
+#include "Core.h"
 
 class GenetateNumber : public QDialog
 {
@@ -11,8 +14,8 @@ class GenetateNumber : public QDialog
 	Q_OBJECT
 
 public:
+	Core c;
 	Ui::Dialog ui;
-	//默认生成数目为1， 模式不初始化，最小和最大空均为20。根据模式是否初始化来划分是-n, -m组合还是-n, -r(, -u)组合
 	int iGenerateNumber = 1, iMode = 0, iMinSpace = 20, iMaxSpace = 20;
 	bool bUnique=false;
 	int **result;
@@ -24,8 +27,10 @@ public:
 	void refreshHSliderMinSpace();
 	void refreshHSliderMaxSpace();
 	void refreshUniqueSign();
+
 signals:
-	void generateSuccessfully(int **result, int iGenerateNumber, int iMode);
+	void generateSuccessfully();
+
 public slots :
 	void responseOK();
 	void refreshOKStatus();		//更新ok按钮状态

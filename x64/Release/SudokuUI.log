@@ -1,0 +1,5 @@
+﻿    正在创建库 C:\Users\15061188\Documents\Visual Studio 2017\Projects\SudokuUI\x64\Release\SudokuUI.lib 和对象 C:\Users\15061188\Documents\Visual Studio 2017\Projects\SudokuUI\x64\Release\SudokuUI.exp
+GenetateNumber.obj : error LNK2001: 无法解析的外部符号 "public: virtual struct QMetaObject const * __cdecl GenetateNumber::metaObject(void)const " (?metaObject@GenetateNumber@@UEBAPEBUQMetaObject@@XZ)
+GenetateNumber.obj : error LNK2001: 无法解析的外部符号 "public: virtual void * __cdecl GenetateNumber::qt_metacast(char const *)" (?qt_metacast@GenetateNumber@@UEAAPEAXPEBD@Z)
+GenetateNumber.obj : error LNK2001: 无法解析的外部符号 "public: virtual int __cdecl GenetateNumber::qt_metacall(enum QMetaObject::Call,int,void * *)" (?qt_metacall@GenetateNumber@@UEAAHW4Call@QMetaObject@@HPEAPEAX@Z)
+C:\Users\15061188\Documents\Visual Studio 2017\Projects\SudokuUI\x64\Release\\SudokuUI.exe : fatal error LNK1120: 3 个无法解析的外部命令

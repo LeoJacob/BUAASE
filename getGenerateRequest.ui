@@ -240,7 +240,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>210</y>
+     <y>200</y>
      <width>181</width>
      <height>16</height>
     </rect>
@@ -282,13 +282,32 @@
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>210</y>
+     <y>200</y>
      <width>181</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
     <string>不知道怎么选？点我就知道啦！</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="tips">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>230</y>
+     <width>241</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>生成数独时间较长，请耐心等待哦~</string>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
    </property>
   </widget>
  </widget>
