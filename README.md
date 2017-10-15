@@ -6,7 +6,7 @@ Usage: sudoku [option]
                <number> should be a integer and in [1, 1000000].
                Note: The option should be used without any other options.
 
-  -s <path>    Solve sudoku puzzle contained in <path> and output their solution               to sudoku.txt.
+  -s <path>    Solve sudoku puzzle contained in <path> and output their solution                          to sudoku.txt.
                Note: The option should be used without any other options.
 
   -n <number>  Generate <number> sudoku puzzles and output them to sudoku.txt.
