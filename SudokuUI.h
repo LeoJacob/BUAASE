@@ -3,9 +3,9 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_SudokuUI.h"
 #include "GenetateNumber.h"
-#include "ui_finishMessage.h"
 #include <QTime>
 #include <QTimer>
+#include <QCloseEvent>
 
 class SudokuUI : public QMainWindow
 {
@@ -19,6 +19,8 @@ public:
 	QTime relativeTime, easyMinTime, mediumMinTime, hardMinTime, customMinTime;
 	QTime *minTime;
 	QWidget *cursorQWidget;
+	FILE *fin;
+	FILE *fout;
 	int **ques;
 	int iGenerateNumber;
 	int curQuesNumber = 0;
@@ -33,11 +35,13 @@ public:
 	bool testAnswer();
 	void refreshLCDMinTime();
 	void refreshContinueButton();
+	void closeEvent(QCloseEvent * event);
 
 protected:
 	void keyPressEvent(QKeyEvent * event);
 
 public slots:
+	void _quit();
 	void receiveQues();
 	void refreshAboutSudokuBox();
 	void responseGetTips(int rowId, int colId);
