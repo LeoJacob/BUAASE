@@ -196,6 +196,22 @@ namespace UnitTest
 			Assert::IsFalse(solver.solve());
 		}
 
+		TEST_METHOD(NoSolution5)
+		{
+            Sudoku9 puzzle(
+                "099654100"
+                "100030050"
+                "054070200"
+                "023080517"
+                "501927083"
+                "080010020"
+                "790540800"
+                "300800705"
+                "000701300");
+			Sudoku9DLXSolver solver(puzzle);
+			Assert::IsFalse(solver.solve());
+		}
+
 		TEST_METHOD(NoRepeat)
 		{
 			int T;
