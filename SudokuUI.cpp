@@ -1,4 +1,5 @@
 #include "SudokuUI.h"
+#include <stdio.h>
 #define CUSTOM_MODE 0
 #define EASY_MODE 1
 #define MEDIUM_MODE 2
@@ -11,10 +12,48 @@ SudokuUI::SudokuUI(QWidget *parent)
 {
 	int i, j;
 	ui.setupUi(this);
+	
+	fopen_s(&fin, "record.txt", "r");
+	if (fin != nullptr)
+	{
+		int record[4][3];
+		for (i = 0; i < 4; i++)
+		{
+			for (j = 0; j < 3; j++)
+			{
+				if (fscanf(fin, "%d", &record[i][j]) == EOF)
+					goto DEFAULT;
+
+				if (j == 0)		//Ð¡Ê±
+				{
+					if (record[i][j] > 23 || record[i][j] < 0)
+						goto DEFAULT;
+				}
+				else //·Ö,Ãë
+				{
+					if (record[i][j] > 59 || record[i][j] < 0)
+						goto DEFAULT;
+				}
+				
+			}
+		}
+		easyMinTime.setHMS(record[0][0], record[0][1], record[0][2]);
+		mediumMinTime.setHMS(record[1][0], record[1][1], record[1][2]);
+		hardMinTime.setHMS(record[2][0], record[2][1], record[2][2]);
+		customMinTime.setHMS(record[3][0], record[3][1], record[3][2]);
+		goto END;
+		if (fin != nullptr)
+			fclose(fin);
+	}
+
+DEFAULT:
 	easyMinTime.setHMS(23, 59, 59);
 	mediumMinTime.setHMS(23, 59, 59);
 	hardMinTime.setHMS(23, 59, 59);
 	customMinTime.setHMS(23, 59, 59);
+	if (fin != nullptr)
+		fclose(fin);
+END:
 	minTime = &easyMinTime;
 	relativeTime.setHMS(0, 0, 0);
 	generateDialog = new GenetateNumber;
@@ -26,7 +65,7 @@ SudokuUI::SudokuUI(QWidget *parent)
 	flag = QObject::connect(generateDialog, SIGNAL(generateSuccessfully()), this, SLOT(receiveQues()));
 	assert(flag);
 	generateDialog->show();
-	flag = QObject::connect(ui._quit, SIGNAL(clicked()), qApp, SLOT(quit()));
+	flag = QObject::connect(ui._quit, SIGNAL(clicked()), this, SLOT(_quit()));
 	assert(flag);
 	flag = QObject::connect(generateDialog, SIGNAL(destroyed()), qApp, SLOT(quit()));
 	assert(flag);
@@ -153,6 +192,34 @@ void SudokuUI::responseGetTips(int rowId, int colId)
 		else
 			QMessageBox::information(NULL, "\346\217\220\347\244\272", "\346\202\250\344\271\213\345\211\215\346\237\220\344\270\252\347\251\272\345\241\253\351\224\231\345\225\246~\345\275\223\345\211\215\346\225\260\347\213\254\346\227\240\350\247\243", QMessageBox::Yes, QMessageBox::Yes);
 	}
+}
+
+void SudokuUI::closeEvent(QCloseEvent * event)
+{
+	_quit();
+}
+
+void SudokuUI::_quit()
+{
+	int i, j;
+	if (fin == nullptr)
+		fopen_s(&fout, "record.txt", "w");
+	else 
+		freopen_s(&fout, "record.txt", "w", fin);
+	fprintf(fout, "%d ", easyMinTime.hour());
+	fprintf(fout, "%d ", easyMinTime.minute());
+	fprintf(fout, "%d ", easyMinTime.second());
+	fprintf(fout, "%d ", mediumMinTime.hour());
+	fprintf(fout, "%d ", mediumMinTime.minute());
+	fprintf(fout, "%d ", mediumMinTime.second());
+	fprintf(fout, "%d ", hardMinTime.hour());
+	fprintf(fout, "%d ", hardMinTime.minute());
+	fprintf(fout, "%d ", hardMinTime.second());
+	fprintf(fout, "%d ", customMinTime.hour());
+	fprintf(fout, "%d ", customMinTime.minute());
+	fprintf(fout, "%d ", customMinTime.second());
+	fclose(fout);
+	qApp->quit();
 }
 
 bool SudokuUI::testOneBoxValid(int rowId, int colId)
