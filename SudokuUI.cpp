@@ -237,7 +237,7 @@ bool SudokuUI::testOneBoxValid(int rowId, int colId)
 		{
 			if (rowId == i || ui.sudokuBox[i][colId]->text().isEmpty())
 				continue;
-			else if (newValue == ui.sudokuBox[i][colId]->text().toInt())
+			else if (newValue == ui.sudokuBox[i][colId]->text().toInt() || newValue == 0)
 				return false;
 		}
 

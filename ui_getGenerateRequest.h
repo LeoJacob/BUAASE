@@ -193,7 +193,7 @@ public:
         Dialog->setWindowTitle(QApplication::translate("Dialog", "Welcome", Q_NULLPTR));
         okButton->setText(QApplication::translate("Dialog", "OK", Q_NULLPTR));
         cancelButton->setText(QApplication::translate("Dialog", "Cancel", Q_NULLPTR));
-        lineEditGenerationNumber->setText(QApplication::translate("Dialog", "\350\257\267\350\276\223\345\205\245\346\202\250\351\234\200\350\246\201\347\232\204\346\225\260\347\213\254\346\225\260\347\233\256", Q_NULLPTR));
+        lineEditGenerationNumber->setText(QApplication::translate("Dialog", "\350\257\267\350\276\223\345\205\245\346\202\250\351\234\200\350\246\201\347\232\204\346\225\260\347\213\254\346\225\260\347\233\256\357\274\2101-10000\357\274\211", Q_NULLPTR));
         
         difficulty->setText(QApplication::translate("Dialog", "\351\232\276\345\272\246", Q_NULLPTR));
         easy->setText(QApplication::translate("Dialog", "\347\256\200\345\215\225", Q_NULLPTR));
