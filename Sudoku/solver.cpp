@@ -165,6 +165,8 @@ void Sudoku9DLXSolver::set(Sudoku9 __puzzle)
 				mask = 1 << (k - 1);
 				if (ban & mask)
 					continue;
+                if (puzzle.data[i][j])
+                    continue;
 				ones.push_back(std::make_pair(rowId(i, j, k), i * 9 + k - 1));
 				ones.push_back(std::make_pair(rowId(i, j, k), 81 + j * 9 + k - 1));
 				ones.push_back(std::make_pair(rowId(i, j, k), 162 + blockId(i, j) * 9 + k - 1));

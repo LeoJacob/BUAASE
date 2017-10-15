@@ -423,11 +423,24 @@ void Sudoku9Generator::__generate(int number, int lowerBlank, int upperBlank, in
     }
 }
 
+void shuffleSudoku9(int number, int result[][81])
+{
+    int i, j;
+    int permutation[11] = {};
+    for (i = 0; i < 10; i += 1)
+        permutation[i] = i;
+    for (i = 0; i < number; i += 1)
+    {
+        std::random_shuffle(permutation + 1, permutation + 10);
+        for (j = 0; j < 81; j += 1)
+            result[i][j] = permutation[result[i][j]];
+    }
+}
+
 void loadNSudoku9FromFile(int number, const char *filename, int result[][81])
 {
     FILE *fin;
     int i, j, N;
-    int permutation[11] = {};
     fin = fopen(filename, "r");
     fscanf(fin, "%d", &N);
     char str[100];
@@ -439,14 +452,12 @@ void loadNSudoku9FromFile(int number, const char *filename, int result[][81])
     }
     fclose(fin);
     std::random_shuffle(repository.begin(), repository.end());
-    for (i = 0; i < 10; i += 1)
-        permutation[i] = i;
     for (i = 0; i < number; i += 1)
     {
-        std::random_shuffle(permutation + 1, permutation + 10);
         for (j = 0; j < 81; j += 1)
-            result[i][j] = permutation[repository[i % repository.size()][j] - '0'];
+            result[i][j] = repository[i % repository.size()][j] - '0';
     }
+    shuffleSudoku9(number, result);
 }
 
 void Sudoku9Generator::generateMode1(int number, int result[][81])
@@ -503,6 +514,7 @@ void Sudoku9Generator::generate(int number, int mode, int result[][81])
 void Sudoku9Generator::generate(int number, int lower, int upper, bool unique, int result[][81])
 {
     __generate(number, lower, upper, -1, -1, result);
+    shuffleSudoku9(number, result);
 }
 
 /*
